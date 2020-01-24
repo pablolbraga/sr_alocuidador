@@ -27,9 +27,31 @@ public class frmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        mnPaciente = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Alô Cuidador");
         setExtendedState(MAXIMIZED_BOTH);
+
+        jMenu1.setText("Cadastros");
+
+        mnPaciente.setText("Pacientes");
+        mnPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnPacienteActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnPaciente);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Movimentação");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -39,11 +61,16 @@ public class frmPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnPacienteActionPerformed
+        frmPaciente f = new frmPaciente(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnPacienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -81,5 +108,9 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mnPaciente;
     // End of variables declaration//GEN-END:variables
 }
