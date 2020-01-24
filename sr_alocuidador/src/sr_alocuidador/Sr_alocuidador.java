@@ -5,6 +5,8 @@
  */
 package sr_alocuidador;
 
+import br.com.sr_alocuidador.views.frmLogin;
+
 /**
  *
  * @author Pablo
@@ -16,6 +18,8 @@ public class Sr_alocuidador {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        frmLogin f = new frmLogin();
+        f.setVisible(true);
     }
     
 }
