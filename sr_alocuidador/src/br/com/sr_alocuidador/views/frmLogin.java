@@ -161,7 +161,8 @@ public class frmLogin extends javax.swing.JFrame {
         
         VariaveisGlobais.getInstance().setDadosUsuario(UsuarioDAO.retornarUsuarioPorLoginSenha(txtLogin.getText(), txtSenha.getText()));
         if (VariaveisGlobais.getInstance().getDadosUsuario() != null){
-            JOptionPane.showMessageDialog(null, "Login validado.");
+            frmPrincipal f = new frmPrincipal();
+            f.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Login e/ou Senha está(ão) incorreto(s)");
         }
