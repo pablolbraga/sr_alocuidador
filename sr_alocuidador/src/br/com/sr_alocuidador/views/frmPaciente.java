@@ -5,11 +5,18 @@
  */
 package br.com.sr_alocuidador.views;
 
+import br.com.sr_alocuidador.daos.ConvenioDAO;
 import br.com.sr_alocuidador.daos.PacienteDAO;
+import br.com.sr_alocuidador.helpers.JtextFieldSomenteNumeros;
+import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Convenio;
 import br.com.sr_alocuidador.models.Paciente;
+import br.com.sr_alocuidador.views.pesquisa.frmPesquisaConvenio;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -39,7 +46,7 @@ public class frmPaciente extends javax.swing.JDialog {
         pnlPesquisa = new javax.swing.JPanel();
         pnlFiltro = new javax.swing.JPanel();
         lblConvenioFiltro = new javax.swing.JLabel();
-        txtCodConvenioFiltro = new javax.swing.JTextField();
+        txtCodConvenioFiltro = new JtextFieldSomenteNumeros();
         btnPesqConvenioFiltro = new javax.swing.JButton();
         txtDescConvenioFiltro = new javax.swing.JTextField();
         lblDescricaoFiltro = new javax.swing.JLabel();
@@ -55,12 +62,31 @@ public class frmPaciente extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pacientes");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         pnlFiltro.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtros"));
 
         lblConvenioFiltro.setText("Convênio:");
 
+        txtCodConvenioFiltro.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtCodConvenioFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodConvenioFiltroKeyPressed(evt);
+            }
+        });
+
         btnPesqConvenioFiltro.setText("...");
+        btnPesqConvenioFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesqConvenioFiltroActionPerformed(evt);
+            }
+        });
+
+        txtDescConvenioFiltro.setEditable(false);
 
         lblDescricaoFiltro.setText("Nome:");
 
@@ -100,7 +126,7 @@ public class frmPaciente extends javax.swing.JDialog {
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pnlFiltroLayout.createSequentialGroup()
                         .addComponent(lblConvenioFiltro)
-                        .addContainerGap(1001, Short.MAX_VALUE))))
+                        .addContainerGap(1030, Short.MAX_VALUE))))
         );
         pnlFiltroLayout.setVerticalGroup(
             pnlFiltroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,6 +165,20 @@ public class frmPaciente extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(tblResultado);
+        if (tblResultado.getColumnModel().getColumnCount() > 0) {
+            tblResultado.getColumnModel().getColumn(0).setMinWidth(100);
+            tblResultado.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tblResultado.getColumnModel().getColumn(0).setMaxWidth(100);
+            tblResultado.getColumnModel().getColumn(1).setMinWidth(500);
+            tblResultado.getColumnModel().getColumn(1).setPreferredWidth(500);
+            tblResultado.getColumnModel().getColumn(1).setMaxWidth(500);
+            tblResultado.getColumnModel().getColumn(2).setMinWidth(300);
+            tblResultado.getColumnModel().getColumn(2).setPreferredWidth(300);
+            tblResultado.getColumnModel().getColumn(2).setMaxWidth(300);
+            tblResultado.getColumnModel().getColumn(3).setMinWidth(150);
+            tblResultado.getColumnModel().getColumn(3).setPreferredWidth(150);
+            tblResultado.getColumnModel().getColumn(3).setMaxWidth(150);
+        }
 
         javax.swing.GroupLayout pnlResultadoLayout = new javax.swing.GroupLayout(pnlResultado);
         pnlResultado.setLayout(pnlResultadoLayout);
@@ -197,7 +237,7 @@ public class frmPaciente extends javax.swing.JDialog {
         pnlCadastro.setLayout(pnlCadastroLayout);
         pnlCadastroLayout.setHorizontalGroup(
             pnlCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1106, Short.MAX_VALUE)
+            .addGap(0, 1135, Short.MAX_VALUE)
         );
         pnlCadastroLayout.setVerticalGroup(
             pnlCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +263,7 @@ public class frmPaciente extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(1153, 751));
+        setSize(new java.awt.Dimension(1182, 751));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -234,6 +274,24 @@ public class frmPaciente extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro ao realizar ao listar os dados.\nErro: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnPesqConvenioFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqConvenioFiltroActionPerformed
+        pesquisarConvenioPorNome();
+    }//GEN-LAST:event_btnPesqConvenioFiltroActionPerformed
+
+    private void txtCodConvenioFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodConvenioFiltroKeyPressed
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            try {
+                pesquisarConvenioPorCodigo(Integer.parseInt(txtCodConvenioFiltro.getText()));
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao pesquisar o código do convênio.\nErro: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_txtCodConvenioFiltroKeyPressed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        alinharColunasPesquisa();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -314,8 +372,39 @@ public class frmPaciente extends javax.swing.JDialog {
                 p.getCodigo(),
                 p.getNome(),
                 p.getConvenio().getNomefantasia(),
-                p.getDtcad()
+                Uteis.formatarData( p.getDtcad() )
             });
         }
+    }
+
+    private void pesquisarConvenioPorNome() {
+        frmPesquisaConvenio f = new frmPesquisaConvenio(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+        if (f.xconvenio != null){
+            txtCodConvenioFiltro.setText(Integer.toString(f.xconvenio.getCodigo()));
+            txtDescConvenioFiltro.setText(f.xconvenio.getNomefantasia());
+        }
+    }
+
+    private void pesquisarConvenioPorCodigo(int convenio) throws SQLException {
+        Convenio cv = ConvenioDAO.buscarPorId(convenio);
+        if (cv != null){
+            txtCodConvenioFiltro.setText(Integer.toString(cv.getCodigo()));
+            txtDescConvenioFiltro.setText(cv.getNomefantasia());
+            txtDescricaoFiltro.grabFocus();
+        } else {
+            JOptionPane.showMessageDialog(null, "Código não encontrado.");
+        }
+    }
+
+    private void alinharColunasPesquisa() {
+        DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
+        DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
+        
+        direita.setHorizontalAlignment(SwingConstants.RIGHT);
+        centro.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        tblResultado.getColumnModel().getColumn(0).setCellRenderer(direita);
+        tblResultado.getColumnModel().getColumn(3).setCellRenderer(centro);
     }
 }

@@ -5,15 +5,22 @@
  */
 package br.com.sr_alocuidador.views.pesquisa;
 
+import br.com.sr_alocuidador.daos.ConvenioDAO;
+import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Convenio;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Pablo
  */
 public class frmPesquisaConvenio extends javax.swing.JDialog {
 
-    /**
-     * Creates new form frmPesquisaConvenio
-     */
+    public Convenio xconvenio = null;
+    
     public frmPesquisaConvenio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -35,17 +42,28 @@ public class frmPesquisaConvenio extends javax.swing.JDialog {
         tblResultado = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pesquisar Convênio");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblPesquisa.setText("Digite o que deseja pesquisar:");
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         tblResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código:", "Razão Social", "Nome Fantasia", "CNPJ"
+                "Código", "Razão Social", "Nome Fantasia", "CNPJ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -54,6 +72,11 @@ public class frmPesquisaConvenio extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblResultado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblResultadoMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblResultado);
@@ -108,6 +131,29 @@ public class frmPesquisaConvenio extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        try {
+            pesquisar();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao realizar a pesquisa.\nErro: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        xconvenio = null;
+    }//GEN-LAST:event_formWindowOpened
+
+    private void tblResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoMouseClicked
+        if (evt.getClickCount() > 1){
+            try {
+                retornarDados();
+                this.setVisible(false);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao retornar o convênio.\nErro: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_tblResultadoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -157,4 +203,28 @@ public class frmPesquisaConvenio extends javax.swing.JDialog {
     private javax.swing.JTable tblResultado;
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
+
+    private void pesquisar() throws SQLException {
+        DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+        modelo.setNumRows(0);
+        List<Convenio> lista = ConvenioDAO.listarTodos(txtPesquisa.getText());
+        if (lista.size() > 0){            
+            for(Convenio c : lista){
+                modelo.addRow(new Object[]{
+                c.getCodigo(),
+                c.getRazaosocial(),
+                c.getNomefantasia(),
+                c.getCnpj()
+            });
+            }
+        }
+    }
+
+    private void retornarDados() throws SQLException {
+        if (Uteis.linhaSelecionada(tblResultado)){
+            int codigoSelecionado = Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString());
+            xconvenio = ConvenioDAO.buscarPorId(codigoSelecionado);
+            
+        }
+    }
 }

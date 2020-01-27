@@ -8,6 +8,8 @@ package br.com.sr_alocuidador.helpers;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -31,5 +33,34 @@ public class Uteis {
         return result;
         
     }
+    public static boolean linhaSelecionada(JTable table){
+        
+        if (table.getSelectedRowCount() > 0)
+            return true;
+        else{
+            JOptionPane.showMessageDialog(null, "Nenhuma linha foi selecionada");
+            return false;
+        }
+        
+    }
+    
+    public static String formatarData(String data){
+        
+        // Transformar yyyy-MM-dd para dd/MM/yyyy
+        if (data != null && !"".equals(data)){
+        
+            String[] xdatahora = data.split(" ");
+            String[] xdata = xdatahora[0].split("-");
+            String novadata = xdata[2] + "/" + xdata[1] + "/" + xdata[0];
+            return novadata;        
+        
+        } else {
+            
+            return "";
+            
+        }
+        
+    }
+    
     
 }
