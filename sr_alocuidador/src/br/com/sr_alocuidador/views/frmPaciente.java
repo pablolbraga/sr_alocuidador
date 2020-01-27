@@ -59,6 +59,9 @@ public class frmPaciente extends javax.swing.JDialog {
         btnAdicionar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         pnlCadastro = new javax.swing.JPanel();
+        pnlBotaoCadastro = new javax.swing.JPanel();
+        btnSalvar = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pacientes");
@@ -198,6 +201,11 @@ public class frmPaciente extends javax.swing.JDialog {
         );
 
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
 
@@ -233,15 +241,53 @@ public class frmPaciente extends javax.swing.JDialog {
 
         tblDados.addTab("Pesquisar", pnlPesquisa);
 
+        pnlBotaoCadastro.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btnSalvar.setText("Salvar");
+
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlBotaoCadastroLayout = new javax.swing.GroupLayout(pnlBotaoCadastro);
+        pnlBotaoCadastro.setLayout(pnlBotaoCadastroLayout);
+        pnlBotaoCadastroLayout.setHorizontalGroup(
+            pnlBotaoCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBotaoCadastroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnSalvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVoltar)
+                .addContainerGap(952, Short.MAX_VALUE))
+        );
+        pnlBotaoCadastroLayout.setVerticalGroup(
+            pnlBotaoCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBotaoCadastroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlBotaoCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnVoltar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pnlCadastroLayout = new javax.swing.GroupLayout(pnlCadastro);
         pnlCadastro.setLayout(pnlCadastroLayout);
         pnlCadastroLayout.setHorizontalGroup(
             pnlCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1135, Short.MAX_VALUE)
+            .addGroup(pnlCadastroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlBotaoCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlCadastroLayout.setVerticalGroup(
             pnlCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 656, Short.MAX_VALUE)
+            .addGroup(pnlCadastroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlBotaoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(588, Short.MAX_VALUE))
         );
 
         tblDados.addTab("Cadastro", pnlCadastro);
@@ -291,7 +337,17 @@ public class frmPaciente extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         alinharColunasPesquisa();
+        habilitarTelaCadastro(false);
+        
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        novoRegistro();
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        habilitarTelaCadastro(false);
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,9 +397,12 @@ public class frmPaciente extends javax.swing.JDialog {
     private javax.swing.JButton btnLimparFiltro;
     private javax.swing.JButton btnPesqConvenioFiltro;
     private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblConvenioFiltro;
     private javax.swing.JLabel lblDescricaoFiltro;
+    private javax.swing.JPanel pnlBotaoCadastro;
     private javax.swing.JPanel pnlCadastro;
     private javax.swing.JPanel pnlFiltro;
     private javax.swing.JPanel pnlPesquisa;
@@ -406,5 +465,20 @@ public class frmPaciente extends javax.swing.JDialog {
         
         tblResultado.getColumnModel().getColumn(0).setCellRenderer(direita);
         tblResultado.getColumnModel().getColumn(3).setCellRenderer(centro);
+    }
+
+    private void habilitarTelaCadastro(boolean b) {
+        tblDados.setEnabledAt(0, !b);
+        tblDados.setEnabledAt(1, b);
+
+        if (!b){
+            tblDados.setSelectedIndex(0);
+        } else {
+            tblDados.setSelectedIndex(1);
+        }
+    }
+
+    private void novoRegistro() {
+        habilitarTelaCadastro(true);
     }
 }
