@@ -74,7 +74,11 @@ public class Convenio extends Endereco  {
     public void setVrcobranca(Double vrcobranca) {
         this.vrcobranca = vrcobranca;
     }
-    
+
+    @Override
+    public String toString() {
+        return nomefantasia;
+    }
     
     
 }

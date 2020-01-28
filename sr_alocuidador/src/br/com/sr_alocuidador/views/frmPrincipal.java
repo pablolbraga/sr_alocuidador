@@ -5,6 +5,8 @@
  */
 package br.com.sr_alocuidador.views;
 
+import br.com.sr_alocuidador.views.movimentacao.frmPacientePesq;
+
 /**
  *
  * @author Pablo
@@ -68,7 +70,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnPacienteActionPerformed
-        frmPaciente f = new frmPaciente(null, rootPaneCheckingEnabled);
+        frmPacientePesq f = new frmPacientePesq(null, rootPaneCheckingEnabled);
         f.setVisible(true);
     }//GEN-LAST:event_mnPacienteActionPerformed
 
