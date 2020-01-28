@@ -62,5 +62,40 @@ public class Uteis {
         
     }
     
+    public static String calcularImc(double altura, double peso){
+        
+        //(C.PESO /  ((C.ALTURA / 100) * (C.ALTURA / 100)))
+        double valor = (peso / ((altura / 100) * (altura / 100)));
+        return retornarStatusImc(valor);
+        
+    }
+    
+    public static String retornarStatusImc(Double valor){
+        
+        if (valor == 0)
+            return "Não informado";
+        else if (valor < 22)
+            return "Baixo peso (Desnutrição)";
+        else if (valor >= 22 && valor <= 27)
+            return "Normal (Eutrófico)";
+        else if (valor > 27)
+            return "Obesidade";
+        else
+            return "";
+    }
+    
+    public static String desformatarData(String data){
+        
+        // Transformar de dd/mm/yyyy para yyyy-mm-dd
+        if ("".equals(data)){
+            return "";
+        } else {
+            String[] xdata = data.split("/");
+            String novadata = xdata[2] + "-" + xdata[1] + "-" + xdata[0];
+            return novadata;
+        }
+        
+    }
+    
     
 }
