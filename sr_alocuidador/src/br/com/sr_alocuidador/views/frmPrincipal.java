@@ -5,7 +5,9 @@
  */
 package br.com.sr_alocuidador.views;
 
+import br.com.sr_alocuidador.views.cadastros.frmCategoriaDoencaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmCategoriaPerguntaPesq;
+import br.com.sr_alocuidador.views.cadastros.frmDoencaPesq;
 import br.com.sr_alocuidador.views.movimentacao.frmPacientePesq;
 
 /**
@@ -32,9 +34,12 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        mnPaciente = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         mnCategoriaPergunta = new javax.swing.JMenuItem();
+        mnPaciente = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        mnCategoriaDoenca = new javax.swing.JMenuItem();
+        mnDoenca = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,14 +47,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
 
         jMenu1.setText("Cadastros");
-
-        mnPaciente.setText("Pacientes");
-        mnPaciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnPacienteActionPerformed(evt);
-            }
-        });
-        jMenu1.add(mnPaciente);
 
         jMenu3.setText("Perguntas");
 
@@ -62,6 +59,34 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenu3.add(mnCategoriaPergunta);
 
         jMenu1.add(jMenu3);
+
+        mnPaciente.setText("Pacientes");
+        mnPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnPacienteActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnPaciente);
+
+        jMenu4.setText("Doenças");
+
+        mnCategoriaDoenca.setText("Categoria");
+        mnCategoriaDoenca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCategoriaDoencaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(mnCategoriaDoenca);
+
+        mnDoenca.setText("Doença");
+        mnDoenca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnDoencaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(mnDoenca);
+
+        jMenu1.add(jMenu4);
 
         jMenuBar1.add(jMenu1);
 
@@ -93,6 +118,16 @@ public class frmPrincipal extends javax.swing.JFrame {
         frmCategoriaPerguntaPesq f = new frmCategoriaPerguntaPesq(null, rootPaneCheckingEnabled);
         f.setVisible(true);
     }//GEN-LAST:event_mnCategoriaPerguntaActionPerformed
+
+    private void mnCategoriaDoencaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCategoriaDoencaActionPerformed
+        frmCategoriaDoencaPesq f = new frmCategoriaDoencaPesq(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnCategoriaDoencaActionPerformed
+
+    private void mnDoencaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnDoencaActionPerformed
+        frmDoencaPesq f = new frmDoencaPesq(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnDoencaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,8 +168,11 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mnCategoriaDoenca;
     private javax.swing.JMenuItem mnCategoriaPergunta;
+    private javax.swing.JMenuItem mnDoenca;
     private javax.swing.JMenuItem mnPaciente;
     // End of variables declaration//GEN-END:variables
 }
