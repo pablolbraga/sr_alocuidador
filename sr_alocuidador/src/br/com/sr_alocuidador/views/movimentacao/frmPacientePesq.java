@@ -386,11 +386,11 @@ public class frmPacientePesq extends javax.swing.JDialog {
 
     private void mnPopupInternacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnPopupInternacoesActionPerformed
         if (Uteis.linhaSelecionada(tblResultado)){
-            /*
+            
             frmPacienteInternacaoPesq f = new frmPacienteInternacaoPesq(null, rootPaneCheckingEnabled);
             f.xcodpaciente = Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString());
             f.setVisible(true);
-            */
+            
         }
     }//GEN-LAST:event_mnPopupInternacoesActionPerformed
 
