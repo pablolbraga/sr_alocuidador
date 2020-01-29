@@ -8,6 +8,8 @@ package br.com.sr_alocuidador.views;
 import br.com.sr_alocuidador.views.cadastros.frmCategoriaDoencaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmCategoriaPerguntaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmDoencaPesq;
+import br.com.sr_alocuidador.views.cadastros.frmServicoMedicoPesq;
+import br.com.sr_alocuidador.views.cadastros.frmVacinaPesq;
 import br.com.sr_alocuidador.views.movimentacao.frmPacientePesq;
 
 /**
@@ -40,6 +42,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         mnCategoriaDoenca = new javax.swing.JMenuItem();
         mnDoenca = new javax.swing.JMenuItem();
+        mnServicoMedico = new javax.swing.JMenuItem();
+        mnVacina = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,6 +92,22 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenu1.add(jMenu4);
 
+        mnServicoMedico.setText("Serviços Médicos");
+        mnServicoMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnServicoMedicoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnServicoMedico);
+
+        mnVacina.setText("Vacinas");
+        mnVacina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnVacinaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnVacina);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Movimentação");
@@ -128,6 +148,16 @@ public class frmPrincipal extends javax.swing.JFrame {
         frmDoencaPesq f = new frmDoencaPesq(null, rootPaneCheckingEnabled);
         f.setVisible(true);
     }//GEN-LAST:event_mnDoencaActionPerformed
+
+    private void mnServicoMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnServicoMedicoActionPerformed
+        frmServicoMedicoPesq f = new frmServicoMedicoPesq(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnServicoMedicoActionPerformed
+
+    private void mnVacinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnVacinaActionPerformed
+        frmVacinaPesq f = new frmVacinaPesq(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnVacinaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,5 +204,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCategoriaPergunta;
     private javax.swing.JMenuItem mnDoenca;
     private javax.swing.JMenuItem mnPaciente;
+    private javax.swing.JMenuItem mnServicoMedico;
+    private javax.swing.JMenuItem mnVacina;
     // End of variables declaration//GEN-END:variables
 }
