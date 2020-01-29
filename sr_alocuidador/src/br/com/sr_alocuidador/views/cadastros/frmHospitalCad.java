@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 public class frmHospitalCad extends javax.swing.JDialog {
 
     public int xcodigo;
+    private HospitalDAO daoHospital;
 
     /**
      * Creates new form frmHospitalCad
@@ -101,6 +102,7 @@ public class frmHospitalCad extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoHospital = new HospitalDAO();
         pesquisar();
         txtNome.grabFocus();
     }//GEN-LAST:event_formWindowOpened
@@ -156,7 +158,7 @@ public class frmHospitalCad extends javax.swing.JDialog {
 
     private void pesquisar() {
         try {
-            Hospital hospital = HospitalDAO.buscarPorId(xcodigo);
+            Hospital hospital = daoHospital.buscarPorId(xcodigo);
             if (hospital != null) {
                 txtNome.setText(hospital.getNome());
                 txtEndereco.setText(hospital.getEndereco());
@@ -217,7 +219,7 @@ public class frmHospitalCad extends javax.swing.JDialog {
         hospital.setCep(txtCep.getText());
         hospital.setContato(txtContatos.getText());
         try {
-            HospitalDAO.validaDados(hospital);
+            daoHospital.validaDados(hospital);
             JOptionPane.showMessageDialog(null, "Registro gravado com sucesso.");
             this.setVisible(false);
         } catch (SQLException ex) {

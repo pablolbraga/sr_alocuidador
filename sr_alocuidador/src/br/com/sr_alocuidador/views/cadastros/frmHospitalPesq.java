@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmHospitalPesq extends javax.swing.JDialog {
 
     private DefaultTableModel modelo = null;
+    private HospitalDAO daoHospital;
     
     /**
      * Creates new form frmHospitalPesq
@@ -161,6 +162,7 @@ public class frmHospitalPesq extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoHospital = new HospitalDAO();
         modelo = (DefaultTableModel)tblResultado.getModel(); 
     }//GEN-LAST:event_formWindowOpened
 
@@ -235,7 +237,7 @@ public class frmHospitalPesq extends javax.swing.JDialog {
     
     private void pesquisar(){
         try {
-            List<Hospital> lista = HospitalDAO.listarHospital(txtPesquisa.getText());
+            List<Hospital> lista = daoHospital.listarHospital(txtPesquisa.getText());
             if (lista.size() > 0){
                 modelo.setNumRows(0);
                 for(int i = 0; i < lista.size(); i++){
@@ -259,7 +261,7 @@ public class frmHospitalPesq extends javax.swing.JDialog {
     private void excluir() {
         if (Uteis.linhaSelecionada(tblResultado)){
             try {
-                HospitalDAO.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
+                daoHospital.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
                 pesquisar();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro de sql: " + ex.toString());

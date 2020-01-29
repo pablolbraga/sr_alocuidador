@@ -12,10 +12,12 @@ public class PacienteConsultaDAO {
     
     private ConstantesItemDAO daoConstanteItem;
     private PacienteDAO daoPaciente;
+    private HospitalDAO daoHospital;
     
     public PacienteConsultaDAO(){        
         daoConstanteItem = new ConstantesItemDAO();        
         daoPaciente = new PacienteDAO();
+        daoHospital = new HospitalDAO();
     }
     
     private void incluir(PacienteConsulta c) throws SQLException{
@@ -96,7 +98,7 @@ public class PacienteConsultaDAO {
             c = new PacienteConsulta();
             c.setCodigo(rs.getInt("ID"));
             c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
-            c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
+            c.setHospital(daoHospital.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setData(rs.getString("DATA"));
             c.setEmergencia(rs.getString("EMERGENCIA"));
             c.setObservacao(rs.getString("OBSERVACAO"));
@@ -122,7 +124,7 @@ public class PacienteConsultaDAO {
             PacienteConsulta c = new PacienteConsulta();
             c.setCodigo(rs.getInt("ID"));
             c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
-            c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
+            c.setHospital(daoHospital.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setData(rs.getString("DATA"));
             c.setEmergencia(rs.getString("EMERGENCIA"));
             c.setObservacao(rs.getString("OBSERVACAO"));
@@ -175,7 +177,7 @@ public class PacienteConsultaDAO {
             PacienteConsulta c = new PacienteConsulta();
             c.setCodigo(rs.getInt("ID"));
             c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
-            c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
+            c.setHospital(daoHospital.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setData(rs.getString("DATA"));
             c.setEmergencia(rs.getString("EMERGENCIA"));
             c.setObservacao(rs.getString("OBSERVACAO"));

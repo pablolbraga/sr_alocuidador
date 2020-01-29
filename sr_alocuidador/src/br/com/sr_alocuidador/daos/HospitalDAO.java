@@ -2,7 +2,6 @@ package br.com.sr_alocuidador.daos;
 
 import br.com.sr_alocuidador.conexao.Conexao;
 import br.com.sr_alocuidador.models.Hospital;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class HospitalDAO {
         
-    private static void incluir(Hospital c) throws SQLException{
+    private void incluir(Hospital c) throws SQLException{
         
         String sqlInserir = "INSERT INTO HOSPITAIS (NOME, ENDERECO, BAIRRO, CIDADE, UF, CEP, CONTATOS) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlInserir);
@@ -26,7 +25,7 @@ public class HospitalDAO {
         
     }
     
-    private static void alterar(Hospital c) throws SQLException{
+    private void alterar(Hospital c) throws SQLException{
         
         String sqlAlterar = "UPDATE HOSPITAIS SET NOME = ?, ENDERECO = ?, BAIRRO = ?, CIDADE = ?, UF = ?, CEP = ?, CONTATOS = ? WHERE IDHOSPITAL = ?";    
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlAlterar);
@@ -42,7 +41,7 @@ public class HospitalDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         String sqlExcluir = "DELETE FROM HOSPITAIS WHERE IDHOSPITAL = ?";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlExcluir);
@@ -51,7 +50,7 @@ public class HospitalDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         String sqlBuscarPorId = "SELECT * FROM HOSPITAIS WHERE IDHOSPITAL = ?";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlBuscarPorId);
@@ -61,7 +60,7 @@ public class HospitalDAO {
         
     }
     
-    public static void validaDados(Hospital c) throws SQLException{
+    public void validaDados(Hospital c) throws SQLException{
         if (existeRegistro(c.getCodigo())){
             alterar(c);
         } else {
@@ -69,7 +68,7 @@ public class HospitalDAO {
         }
     }
     
-    public static Hospital buscarPorId(int codigo) throws SQLException{
+    public Hospital buscarPorId(int codigo) throws SQLException{
         
         String sqlBuscarPorId = "SELECT * FROM HOSPITAIS WHERE IDHOSPITAL = ?";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlBuscarPorId);
@@ -91,7 +90,7 @@ public class HospitalDAO {
         
     }
     
-    public static List<Hospital> listarHospital(String filtro) throws SQLException{
+    public List<Hospital> listarHospital(String filtro) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM HOSPITAIS WHERE 1 = 1 ");

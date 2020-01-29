@@ -12,10 +12,12 @@ public class PacienteInternacaoDAO {
     
     private ConstantesItemDAO daoConstanteItem;
     private PacienteDAO daoPaciente;
+    private HospitalDAO daoHospital;
     
     public PacienteInternacaoDAO(){        
         daoConstanteItem = new ConstantesItemDAO();        
         daoPaciente = new PacienteDAO();
+        daoHospital = new HospitalDAO();
     }
     
     private void incluir(PacienteInternacao c) throws SQLException{
@@ -97,7 +99,7 @@ public class PacienteInternacaoDAO {
             c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
             c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
-            c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
+            c.setHospital(daoHospital.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
@@ -123,7 +125,7 @@ public class PacienteInternacaoDAO {
             PacienteInternacao c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
             c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
-            c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
+            c.setHospital(daoHospital.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
@@ -174,7 +176,7 @@ public class PacienteInternacaoDAO {
             PacienteInternacao c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
             c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
-            c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
+            c.setHospital(daoHospital.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
@@ -200,7 +202,7 @@ public class PacienteInternacaoDAO {
             PacienteInternacao c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
             c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
-            c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
+            c.setHospital(daoHospital.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
@@ -226,7 +228,7 @@ public class PacienteInternacaoDAO {
             c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
             c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
-            c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
+            c.setHospital(daoHospital.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
