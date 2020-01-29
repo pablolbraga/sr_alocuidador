@@ -24,7 +24,9 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
     private List<Doenca> listaDoenca = new ArrayList<>();
     
     public int xcodigo;
-    public int xcodpaciente;    
+    public int xcodpaciente; 
+    private PacienteDoencaDAO daoPacienteDoenca;
+    private DoencaDAO daoDoenca;
     
     public frmPacienteDoencaCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -84,6 +86,8 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPacienteDoenca = new PacienteDoencaDAO();
+            daoDoenca = new DoencaDAO();
             preencheDoenca();
             pesquisar();
         } catch (SQLException ex) {
@@ -177,11 +181,11 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
         c.setPaciente(PacienteDAO.buscarPorId(xcodpaciente));
         c.setDoenca(((Doenca)cmbDoenca.getSelectedItem()));
         c.setDescricao(txtDescricao.getText());
-        PacienteDoencaDAO.validaDados(c);        
+        daoPacienteDoenca.validaDados(c);        
     }
     
     private void pesquisar() throws SQLException {
-        PacienteDoenca c = PacienteDoencaDAO.buscarPorId(xcodigo);
+        PacienteDoenca c = daoPacienteDoenca.buscarPorId(xcodigo);
         if (c != null){
             for(int i = 0; i < listaDoenca.size(); i++){
                 if (listaDoenca.get(i).getCodigo() == c.getDoenca().getCodigo()){
@@ -195,7 +199,7 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
 
     private void preencheDoenca() throws SQLException {
         cmbDoenca.removeAllItems();
-        listaDoenca = DoencaDAO.ListarTodos(0);
+        listaDoenca = daoDoenca.ListarTodos(0);
         for(Doenca c : listaDoenca){
             cmbDoenca.addItem(c);
         }

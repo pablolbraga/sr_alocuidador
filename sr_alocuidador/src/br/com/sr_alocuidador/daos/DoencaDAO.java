@@ -19,7 +19,13 @@ import java.util.List;
  */
 public class DoencaDAO {
     
-    private static void Incluir(Doenca c) throws SQLException{
+    private CategoriaDoencaDAO daoCategDoenca = null;
+    
+    public DoencaDAO(){
+        daoCategDoenca = new CategoriaDoencaDAO();
+    }
+    
+    private void Incluir(Doenca c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO DOENCAS (IDDOENCACATEG,DESCRICAO) VALUES (?, ?)");
@@ -31,7 +37,7 @@ public class DoencaDAO {
         
     }
     
-    private static void Alterar(Doenca c) throws SQLException{
+    private void Alterar(Doenca c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE DOENCAS SET IDDOENCACATEG = ?, DESCRICAO = ? WHERE IDDOENCA = ?");
@@ -44,7 +50,7 @@ public class DoencaDAO {
         
     }
     
-    public static void Excluir(int codigo) throws SQLException{
+    public void Excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM DOENCAS WHERE IDDOENCA = ?");
@@ -55,7 +61,7 @@ public class DoencaDAO {
         
     }
     
-    private static boolean ExisteRegistro(int codigo) throws SQLException{
+    private boolean ExisteRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM DOENCAS WHERE IDDOENCA = ?");        
@@ -66,7 +72,7 @@ public class DoencaDAO {
         
     }
     
-    public static void ValidaDados(Doenca c) throws SQLException{
+    public void ValidaDados(Doenca c) throws SQLException{
         
         if (ExisteRegistro(c.getCodigo()))
             Alterar(c);
@@ -75,7 +81,7 @@ public class DoencaDAO {
         
     }
     
-    public static Doenca BuscarPorId(int codigo) throws SQLException{
+    public Doenca BuscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();        
         Doenca c = null;
@@ -86,7 +92,7 @@ public class DoencaDAO {
             if (rs.next()){
                 c = new Doenca();
                 c.setCodigo(codigo);
-                c.setCategoriadoenca(CategoriaDoencaDAO.BuscarPorId(rs.getInt("IDDOENCACATEG")));
+                c.setCategoriadoenca(daoCategDoenca.BuscarPorId(rs.getInt("IDDOENCACATEG")));
                 c.setNome(rs.getString("DESCRICAO"));
             }
         }
@@ -94,7 +100,7 @@ public class DoencaDAO {
         
     }
     
-    public static List<Doenca> ListarTodos(int categoria) throws SQLException{
+    public List<Doenca> ListarTodos(int categoria) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM DOENCAS WHERE 1 = 1");
@@ -110,7 +116,7 @@ public class DoencaDAO {
             while(rs.next()){
                 Doenca c = new Doenca();
                 c.setCodigo(rs.getInt("IDDOENCA"));
-                c.setCategoriadoenca(CategoriaDoencaDAO.BuscarPorId(rs.getInt("IDDOENCACATEG")));
+                c.setCategoriadoenca(daoCategDoenca.BuscarPorId(rs.getInt("IDDOENCACATEG")));
                 c.setNome(rs.getString("DESCRICAO"));
                 lista.add(c);
             }

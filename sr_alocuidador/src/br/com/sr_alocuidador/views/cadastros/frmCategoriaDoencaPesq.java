@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmCategoriaDoencaPesq extends javax.swing.JDialog {
 
     DefaultTableModel modelo = null;
+    private CategoriaDoencaDAO daoCategDoenca = null;
     
     /**
      * Creates new form frmCategoriaDoencaPesq
@@ -113,6 +114,7 @@ public class frmCategoriaDoencaPesq extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoCategDoenca = new CategoriaDoencaDAO();
         modelo = (DefaultTableModel)tblResultado.getModel(); 
         pesquisar();
     }//GEN-LAST:event_formWindowOpened
@@ -199,7 +201,7 @@ public class frmCategoriaDoencaPesq extends javax.swing.JDialog {
     private void excluir(){
         if (Uteis.linhaSelecionada(tblResultado)){
             try {
-                CategoriaDoencaDAO.Excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
+                daoCategDoenca.Excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
                 pesquisar();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro de sql: " + ex.toString());
@@ -211,7 +213,7 @@ public class frmCategoriaDoencaPesq extends javax.swing.JDialog {
         
         try {
             modelo.setNumRows(0);
-            List<CategoriaDoenca> lista = CategoriaDoencaDAO.ListarTodos();
+            List<CategoriaDoenca> lista = daoCategDoenca.ListarTodos();
             lista.forEach((categoriaDoenca) -> {
                 modelo.addRow(new Object[]{categoriaDoenca.getCodigo(), categoriaDoenca.getNome()});
             });

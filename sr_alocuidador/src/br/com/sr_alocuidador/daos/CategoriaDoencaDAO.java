@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class CategoriaDoencaDAO{
     
-    private static void Incluir(CategoriaDoenca c) throws SQLException{
+    private void Incluir(CategoriaDoenca c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO DOENCAS_CATEGORIA (DESCRICAO) VALUES (?)");
@@ -31,7 +31,7 @@ public class CategoriaDoencaDAO{
         
     }
     
-    private static void Alterar(CategoriaDoenca c) throws SQLException{
+    private void Alterar(CategoriaDoenca c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE DOENCAS_CATEGORIA SET DESCRICAO = ? WHERE IDDOENCACATEG = ?");
@@ -43,7 +43,7 @@ public class CategoriaDoencaDAO{
         
     }
     
-    public static void Excluir(int codigo) throws SQLException{
+    public void Excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM DOENCAS_CATEGORIA WHERE IDDOENCACATEG = ?");
@@ -54,7 +54,7 @@ public class CategoriaDoencaDAO{
         
     }
     
-    private static boolean ExisteRegistro(int codigo) throws SQLException{
+    private boolean ExisteRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM DOENCAS_CATEGORIA WHERE IDDOENCACATEG = ?");        
@@ -65,7 +65,7 @@ public class CategoriaDoencaDAO{
         
     }
     
-    public static void ValidaDados(CategoriaDoenca c) throws SQLException{
+    public void ValidaDados(CategoriaDoenca c) throws SQLException{
         
         if (ExisteRegistro(c.getCodigo()))
             Alterar(c);
@@ -74,7 +74,7 @@ public class CategoriaDoencaDAO{
         
     }
     
-    public static CategoriaDoenca BuscarPorId(int codigo) throws SQLException{
+    public CategoriaDoenca BuscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();        
         CategoriaDoenca c = null;
@@ -88,12 +88,12 @@ public class CategoriaDoencaDAO{
                 c.setNome(rs.getString("DESCRICAO"));
             }
         }
-;
+        
         return c;
         
     }
     
-    public static List<CategoriaDoenca> ListarTodos() throws SQLException{
+    public List<CategoriaDoenca> ListarTodos() throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM DOENCAS_CATEGORIA ORDER BY DESCRICAO");

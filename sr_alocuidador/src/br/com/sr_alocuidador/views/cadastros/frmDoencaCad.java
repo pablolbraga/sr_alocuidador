@@ -21,6 +21,8 @@ public class frmDoencaCad extends javax.swing.JDialog {
 
     public int xcodigo;
     private List<CategoriaDoenca> listaCategoriaDoenca;
+    private DoencaDAO daoDoenca;
+    private CategoriaDoencaDAO daoCategDoenca;
     
     /**
      * Creates new form frmDoencaCad
@@ -76,6 +78,7 @@ public class frmDoencaCad extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoDoenca = new DoencaDAO();
         PreencherCategoriaDoenca();
         cmbCategoriaDoenca.setSelectedIndex(-1);
         Pesquisar();
@@ -130,7 +133,7 @@ public class frmDoencaCad extends javax.swing.JDialog {
     
     private void Pesquisar(){
         try {
-            Doenca doenca = DoencaDAO.BuscarPorId(xcodigo);
+            Doenca doenca = daoDoenca.BuscarPorId(xcodigo);
             if (doenca != null){
                 txtNome.setText(doenca.getNome());
                 for(int i = 0; i < listaCategoriaDoenca.size(); i++){
@@ -166,7 +169,7 @@ public class frmDoencaCad extends javax.swing.JDialog {
         doencaEntidade.setCategoriadoenca((CategoriaDoenca)cmbCategoriaDoenca.getSelectedItem());
         doencaEntidade.setNome(txtNome.getText());
         try {
-            DoencaDAO.ValidaDados(doencaEntidade);
+            daoDoenca.ValidaDados(doencaEntidade);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro de sql: " + ex.toString());
         }
@@ -176,7 +179,7 @@ public class frmDoencaCad extends javax.swing.JDialog {
         
         try {
             cmbCategoriaDoenca.removeAllItems();
-            listaCategoriaDoenca = CategoriaDoencaDAO.ListarTodos();
+            listaCategoriaDoenca = daoCategDoenca.ListarTodos();
             for (int i = 0; i < listaCategoriaDoenca.size(); i++){
                 cmbCategoriaDoenca.addItem(listaCategoriaDoenca.get(i).toString());
             }

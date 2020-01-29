@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 public class frmCategoriaDoencaCad extends javax.swing.JDialog {
 
     public int xcodigo;
+    private CategoriaDoencaDAO daoCategDoenca;
     
     /**
      * Creates new form frmCategoriaDoencaCad
@@ -68,6 +69,7 @@ public class frmCategoriaDoencaCad extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoCategDoenca = new CategoriaDoencaDAO();        
         pesquisar();
         txtNome.grabFocus();
     }//GEN-LAST:event_formWindowOpened
@@ -125,7 +127,7 @@ public class frmCategoriaDoencaCad extends javax.swing.JDialog {
     
     private void pesquisar(){
         try {
-            CategoriaDoenca categoriaDoenca = CategoriaDoencaDAO.BuscarPorId(xcodigo);
+            CategoriaDoenca categoriaDoenca = daoCategDoenca.BuscarPorId(xcodigo);
             if (categoriaDoenca != null){
                 txtNome.setText(categoriaDoenca.getNome());
             }
@@ -149,7 +151,7 @@ public class frmCategoriaDoencaCad extends javax.swing.JDialog {
         categoriaDoenca.setCodigo(xcodigo);
         categoriaDoenca.setNome(txtNome.getText());
         try {
-            CategoriaDoencaDAO.ValidaDados(categoriaDoenca);
+            daoCategDoenca.ValidaDados(categoriaDoenca);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro de sql: " + ex.toString());
         }

@@ -6,9 +6,6 @@ public class PacienteDoenca {
     private Paciente paciente;
     private Doenca doenca;
     private String descricao;
-    
-    private String nmpaciente;
-    private String nmdoenca;
 
     public int getCodigo() {
         return codigo;
@@ -42,24 +39,5 @@ public class PacienteDoenca {
         this.descricao = descricao;
     }
 
-    public String getNmpaciente() {
-        return nmpaciente;
-    }
-
-    public void setNmpaciente(String nmpaciente) {
-        this.nmpaciente = nmpaciente;
-    }
-
-    public String getNmdoenca() {
-        return nmdoenca;
-    }
-
-    public void setNmdoenca(String nmdoenca) {
-        this.nmdoenca = nmdoenca;
-    }
-
-    
-    
-    
     
 }

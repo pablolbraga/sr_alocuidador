@@ -23,7 +23,8 @@ public class frmDoencaPesq extends javax.swing.JDialog {
 
     private List<CategoriaDoenca> listaCategoriaDoenca;
     private DefaultTableModel modelo = null;
-    
+    private CategoriaDoencaDAO daoCategDoenca;
+    private DoencaDAO daoDoenca;
     
     /**
      * Creates new form frmDoencaPesq
@@ -175,6 +176,7 @@ public class frmDoencaPesq extends javax.swing.JDialog {
     }//GEN-LAST:event_tblResultadoMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoCategDoenca = new CategoriaDoencaDAO();
         modelo = (DefaultTableModel)tblResultado.getModel(); 
         PreencherCategoriaDoenca();
         cmbFiltroCategoria.setSelectedIndex(-1);
@@ -247,7 +249,7 @@ public class frmDoencaPesq extends javax.swing.JDialog {
         try {           
             
             cmbFiltroCategoria.removeAllItems();
-            listaCategoriaDoenca = CategoriaDoencaDAO.ListarTodos();
+            listaCategoriaDoenca = daoCategDoenca.ListarTodos();
             for(CategoriaDoenca c : listaCategoriaDoenca){
                 cmbFiltroCategoria.addItem(c);
             }
@@ -265,7 +267,7 @@ public class frmDoencaPesq extends javax.swing.JDialog {
     private void excluir() {
         if (Uteis.linhaSelecionada(tblResultado)){
             try {
-                CategoriaDoencaDAO.Excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
+                daoCategDoenca.Excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
                 Pesquisar();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro de sql: " + ex.toString());
@@ -294,7 +296,7 @@ public class frmDoencaPesq extends javax.swing.JDialog {
                 xcateg = ((CategoriaDoenca)cmbFiltroCategoria.getSelectedItem()).getCodigo();           
             }    
 
-            List<Doenca> listaDoenca = DoencaDAO.ListarTodos(xcateg);
+            List<Doenca> listaDoenca = daoDoenca.ListarTodos(xcateg);
             modelo.setNumRows(0);
             for(int i = 0; i < listaDoenca.size(); i++){
                 modelo.addRow(new Object[]{listaDoenca.get(i).getCodigo(), listaDoenca.get(i).getCategoriadoenca().getNome(), listaDoenca.get(i).getNome()});
