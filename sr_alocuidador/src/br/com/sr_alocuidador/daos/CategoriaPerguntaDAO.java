@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CategoriaPerguntaDAO {
     
-    private static void incluir(CategoriaPergunta c) throws SQLException{
+    private void incluir(CategoriaPergunta c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO PERGUNTAS_CATEGORIA (NOME) VALUES (?)");
@@ -20,7 +20,7 @@ public class CategoriaPerguntaDAO {
         
     }
     
-    private static void alterar(CategoriaPergunta c) throws SQLException{
+    private void alterar(CategoriaPergunta c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE PERGUNTAS_CATEGORIA SET NOME = ? WHERE IDPERGCATEG = ?");
@@ -31,7 +31,7 @@ public class CategoriaPerguntaDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM PERGUNTAS_CATEGORIA WHERE IDPERGCATEG = ?");
@@ -41,7 +41,7 @@ public class CategoriaPerguntaDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM PERGUNTAS_CATEGORIA WHERE IDPERGCATEG = ?");
@@ -52,7 +52,7 @@ public class CategoriaPerguntaDAO {
         
     }
     
-    public static void validaDados(CategoriaPergunta c) throws SQLException{
+    public void validaDados(CategoriaPergunta c) throws SQLException{
         
         if (existeRegistro(c.getCodigo())){
             alterar(c);
@@ -62,7 +62,7 @@ public class CategoriaPerguntaDAO {
         
     }
     
-    public static CategoriaPergunta BuscarPorId(int codigo) throws SQLException{
+    public CategoriaPergunta BuscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM PERGUNTAS_CATEGORIA WHERE IDPERGCATEG = ?");
@@ -78,7 +78,7 @@ public class CategoriaPerguntaDAO {
         return p;
     }
     
-    public static List<CategoriaPergunta> listarTodos() throws SQLException{
+    public List<CategoriaPergunta> listarTodos() throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM PERGUNTAS_CATEGORIA ORDER BY NOME");

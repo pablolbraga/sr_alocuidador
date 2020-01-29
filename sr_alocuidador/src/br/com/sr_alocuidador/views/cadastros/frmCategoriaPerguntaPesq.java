@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmCategoriaPerguntaPesq extends javax.swing.JDialog {
 
     DefaultTableModel modelo = null;
+    private CategoriaPerguntaDAO daoCategPergunta;
     
     public frmCategoriaPerguntaPesq(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -134,6 +135,7 @@ public class frmCategoriaPerguntaPesq extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoCategPergunta = new CategoriaPerguntaDAO();
         modelo = (DefaultTableModel)tblResultado.getModel(); 
         pesquisar();
     }//GEN-LAST:event_formWindowOpened
@@ -221,7 +223,7 @@ public class frmCategoriaPerguntaPesq extends javax.swing.JDialog {
         
         try {
             modelo.setNumRows(0);
-            List<CategoriaPergunta> lista = CategoriaPerguntaDAO.listarTodos();
+            List<CategoriaPergunta> lista = daoCategPergunta.listarTodos();
             for(CategoriaPergunta c : lista){
                 modelo.addRow(new Object[]{c.getCodigo(), c.getNome()});
             }
@@ -249,7 +251,7 @@ public class frmCategoriaPerguntaPesq extends javax.swing.JDialog {
     
     private void excluir() throws SQLException{
         
-        CategoriaPerguntaDAO.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
+        daoCategPergunta.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
         
     }
 }

@@ -10,7 +10,13 @@ import java.util.List;
 
 public class PacienteCategoriaPerguntaDAO {
     
-    private static void incluir(PacienteCategoriaPergunta c) throws SQLException{
+    private CategoriaPerguntaDAO daoCategPergunta;
+    
+    public PacienteCategoriaPerguntaDAO(){
+        daoCategPergunta = new CategoriaPerguntaDAO();
+    }
+    
+    private void incluir(PacienteCategoriaPergunta c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO CLIENTES_PERGCATEG (IDCLIENTE, IDPERGCATEG, SEQ) VALUES (?, ?, ?)");
@@ -22,7 +28,7 @@ public class PacienteCategoriaPerguntaDAO {
         
     }
     
-    private static void alterar(PacienteCategoriaPergunta c) throws SQLException{
+    private void alterar(PacienteCategoriaPergunta c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES_PERGCATEG SET IDCLIENTE = ?, IDPERGCATEG = ?, SEQ = ? WHERE IDCLIPERGCATEG = ?");
@@ -35,7 +41,7 @@ public class PacienteCategoriaPerguntaDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM CLIENTES_PERGCATEG WHERE ID = ?");
@@ -45,7 +51,7 @@ public class PacienteCategoriaPerguntaDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_PERGCATEG CC WHERE CC.ID = ?");
@@ -56,7 +62,7 @@ public class PacienteCategoriaPerguntaDAO {
         
     }
     
-    public static void validaDados(PacienteCategoriaPergunta c) throws SQLException{
+    public void validaDados(PacienteCategoriaPergunta c) throws SQLException{
         if (existeRegistro(c.getCodigo())){
             alterar(c);
         } else {
@@ -64,7 +70,7 @@ public class PacienteCategoriaPerguntaDAO {
         }
     }
     
-    public static PacienteCategoriaPergunta buscarPorId(int codigo) throws SQLException{
+    public PacienteCategoriaPergunta buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CPC.*, PC.NOME AS NMPERGCATEG FROM CLIENTES_PERGCATEG CPC INNER JOIN PERGUNTAS_CATEGORIA PC ON PC.IDPERGCATEG = CPC.IDPERGCATEG WHERE CPC.IDCLIPERGCATEG = ?");
@@ -76,14 +82,14 @@ public class PacienteCategoriaPerguntaDAO {
             c = new PacienteCategoriaPergunta();
             c.setCodigo(rs.getInt("IDCLIPERGCATEG"));
             c.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
-            c.setCategoriapergunta(CategoriaPerguntaDAO.BuscarPorId(rs.getInt("IDPERGCATEG")));
+            c.setCategoriapergunta(daoCategPergunta.BuscarPorId(rs.getInt("IDPERGCATEG")));
             c.setSequencia(rs.getInt("SEQ"));
         }
         return c;
         
     }
     
-    public static List<PacienteCategoriaPergunta> listarCategoriasPorPaciente(int paciente) throws SQLException{
+    public List<PacienteCategoriaPergunta> listarCategoriasPorPaciente(int paciente) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CPC.*, PC.NOME AS NMPERGCATEG FROM CLIENTES_PERGCATEG CPC INNER JOIN PERGUNTAS_CATEGORIA PC ON PC.IDPERGCATEG = CPC.IDPERGCATEG WHERE CPC.IDCLIENTE = ?");
@@ -95,7 +101,7 @@ public class PacienteCategoriaPerguntaDAO {
             PacienteCategoriaPergunta c = new PacienteCategoriaPergunta();
             c.setCodigo(rs.getInt("IDCLIPERGCATEG"));
             c.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
-            c.setCategoriapergunta(CategoriaPerguntaDAO.BuscarPorId(rs.getInt("IDPERGCATEG")));
+            c.setCategoriapergunta(daoCategPergunta.BuscarPorId(rs.getInt("IDPERGCATEG")));
             c.setSequencia(rs.getInt("SEQ"));
             lista.add(c);
         }

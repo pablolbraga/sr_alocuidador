@@ -23,6 +23,8 @@ import javax.swing.JOptionPane;
 public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
 
     private List<CategoriaPergunta> listaCategoriaPergunta = new ArrayList<>();
+    private PacienteCategoriaPerguntaDAO daoPacienteCategPergunta;
+    private CategoriaPerguntaDAO daoCategPergunta;
     
     public int xcodigo;
     public int xcodpaciente;    
@@ -85,6 +87,8 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPacienteCategPergunta = new PacienteCategoriaPerguntaDAO();
+            daoCategPergunta = new CategoriaPerguntaDAO();
             preencheCategoria();
             pesquisar();
         } catch (SQLException ex) {
@@ -182,11 +186,11 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
         c.setPaciente(PacienteDAO.buscarPorId(xcodpaciente));
         c.setCategoriapergunta(((CategoriaPergunta)cmbCategoriaPergunta.getSelectedItem()));
         c.setSequencia(Integer.parseInt(txtSequencia.getText()));
-        PacienteCategoriaPerguntaDAO.validaDados(c);        
+        daoPacienteCategPergunta.validaDados(c);        
     }
     
     private void pesquisar() throws SQLException {
-        PacienteCategoriaPergunta c = PacienteCategoriaPerguntaDAO.buscarPorId(xcodigo);
+        PacienteCategoriaPergunta c = daoPacienteCategPergunta.buscarPorId(xcodigo);
         if (c != null){
             for(int i = 0; i < listaCategoriaPergunta.size(); i++){
                 if (listaCategoriaPergunta.get(i).getCodigo() == c.getCategoriapergunta().getCodigo()){
@@ -200,7 +204,7 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
 
     private void preencheCategoria() throws SQLException {
         cmbCategoriaPergunta.removeAllItems();
-        listaCategoriaPergunta = CategoriaPerguntaDAO.listarTodos();
+        listaCategoriaPergunta = daoCategPergunta.listarTodos();
         for(CategoriaPergunta c : listaCategoriaPergunta){
             cmbCategoriaPergunta.addItem(c);
         }

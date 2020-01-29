@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 public class frmCategoriaPerguntaCad extends javax.swing.JDialog {
 
     public int xcodigo;
+    private CategoriaPerguntaDAO daoCategPergunta;
     
     public frmCategoriaPerguntaCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -84,6 +85,7 @@ public class frmCategoriaPerguntaCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoCategPergunta = new CategoriaPerguntaDAO();
             pesquisar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao pesquisar a categoria: " + ex.toString());
@@ -152,7 +154,7 @@ public class frmCategoriaPerguntaCad extends javax.swing.JDialog {
 
     private void pesquisar() throws SQLException {
         
-        CategoriaPergunta c = CategoriaPerguntaDAO.BuscarPorId(xcodigo);
+        CategoriaPergunta c = daoCategPergunta.BuscarPorId(xcodigo);
         if (c != null){
             txtNome.setText(c.getNome());
         }
@@ -175,7 +177,7 @@ public class frmCategoriaPerguntaCad extends javax.swing.JDialog {
         CategoriaPergunta c = new CategoriaPergunta();
         c.setCodigo(xcodigo);
         c.setNome(txtNome.getText());
-        CategoriaPerguntaDAO.validaDados(c);
+        daoCategPergunta.validaDados(c);
         
     }
 }
