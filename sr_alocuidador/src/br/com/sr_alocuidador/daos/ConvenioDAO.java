@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ConvenioDAO {
     
-    public static Convenio buscarPorId(int codigo) throws SQLException{
+    public Convenio buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CONVENIOS WHERE IDCONVENIO = ?");
@@ -37,7 +37,7 @@ public class ConvenioDAO {
         
     }
     
-    public static List<Convenio> listarTodos(String nome) throws SQLException{
+    public List<Convenio> listarTodos(String nome) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CONVENIOS WHERE 1 = 1 ");

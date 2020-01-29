@@ -23,6 +23,8 @@ import javax.swing.JOptionPane;
 public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
 
     private List<ServicoMedico> listaServicoMedico = new ArrayList<>();
+    private PacienteDAO daoPaciente;
+    private PacienteServicoMedicoDAO daoPacienteServicoMedico;
     
     public int xcodigo;
     public int xcodpaciente;    
@@ -98,6 +100,8 @@ public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPaciente = new PacienteDAO();
+            daoPacienteServicoMedico = new PacienteServicoMedicoDAO();
             preencheServicoMedico();
             pesquisar();
         } catch (SQLException ex) {
@@ -201,16 +205,16 @@ public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteServicoMedico c = new PacienteServicoMedico();
         c.setCodigo(xcodigo);
-        c.setPaciente(PacienteDAO.buscarPorId(xcodpaciente));
+        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
         c.setServico(((ServicoMedico)cmbServicoMedico.getSelectedItem()));        
         c.setData(Uteis.desformatarData(txtData.getText()));
         c.setProfissional(txtProfissional.getText());
         c.setObservacao(txtObservacao.getText());
-        PacienteServicoMedicoDAO.validaDados(c);        
+        daoPacienteServicoMedico.validaDados(c);        
     }
     
     private void pesquisar() throws SQLException {
-        PacienteServicoMedico c = PacienteServicoMedicoDAO.buscarPorId(xcodigo);
+        PacienteServicoMedico c = daoPacienteServicoMedico.buscarPorId(xcodigo);
         if (c != null){
             for(int i = 0; i < listaServicoMedico.size(); i++){
                 if (listaServicoMedico.get(i).getCodigo() == c.getServico().getCodigo()){

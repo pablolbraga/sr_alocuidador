@@ -27,6 +27,7 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
     public int xcodpaciente; 
     private PacienteDoencaDAO daoPacienteDoenca;
     private DoencaDAO daoDoenca;
+    private PacienteDAO daoPaciente;
     
     public frmPacienteDoencaCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -88,6 +89,7 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
         try {
             daoPacienteDoenca = new PacienteDoencaDAO();
             daoDoenca = new DoencaDAO();
+            daoPaciente = new PacienteDAO();
             preencheDoenca();
             pesquisar();
         } catch (SQLException ex) {
@@ -178,7 +180,7 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteDoenca c = new PacienteDoenca();
         c.setCodigo(xcodigo);
-        c.setPaciente(PacienteDAO.buscarPorId(xcodpaciente));
+        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
         c.setDoenca(((Doenca)cmbDoenca.getSelectedItem()));
         c.setDescricao(txtDescricao.getText());
         daoPacienteDoenca.validaDados(c);        

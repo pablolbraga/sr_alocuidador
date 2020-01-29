@@ -25,6 +25,7 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
     private List<CategoriaPergunta> listaCategoriaPergunta = new ArrayList<>();
     private PacienteCategoriaPerguntaDAO daoPacienteCategPergunta;
     private CategoriaPerguntaDAO daoCategPergunta;
+    private PacienteDAO daoPaciente;
     
     public int xcodigo;
     public int xcodpaciente;    
@@ -89,6 +90,7 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
         try {
             daoPacienteCategPergunta = new PacienteCategoriaPerguntaDAO();
             daoCategPergunta = new CategoriaPerguntaDAO();
+            daoPaciente = new PacienteDAO();
             preencheCategoria();
             pesquisar();
         } catch (SQLException ex) {
@@ -183,7 +185,7 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteCategoriaPergunta c = new PacienteCategoriaPergunta();
         c.setCodigo(xcodigo);
-        c.setPaciente(PacienteDAO.buscarPorId(xcodpaciente));
+        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
         c.setCategoriapergunta(((CategoriaPergunta)cmbCategoriaPergunta.getSelectedItem()));
         c.setSequencia(Integer.parseInt(txtSequencia.getText()));
         daoPacienteCategPergunta.validaDados(c);        

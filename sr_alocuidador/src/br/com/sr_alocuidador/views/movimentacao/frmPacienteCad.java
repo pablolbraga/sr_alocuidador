@@ -25,6 +25,7 @@ public class frmPacienteCad extends javax.swing.JDialog {
     // Variaveis de inicialização
     public int xcodigo;
     private PacienteDAO daoPaciente;
+    private ConvenioDAO daoConvenio;
     private List<Convenio> listarConvenios;
     private PacienteInternacaoDAO daoPacienteInternacao;
 
@@ -587,6 +588,7 @@ public class frmPacienteCad extends javax.swing.JDialog {
         // TODO add your handling code here:
         daoPaciente = new PacienteDAO();
         daoPacienteInternacao = new PacienteInternacaoDAO();
+        daoConvenio = new ConvenioDAO();
         try {
             PreencheConvenio();
         } catch (SQLException ex) {
@@ -859,7 +861,7 @@ public class frmPacienteCad extends javax.swing.JDialog {
 
     private void Pesquisar() {
         try {
-            Paciente paciente = PacienteDAO.buscarPorId(xcodigo);
+            Paciente paciente = daoPaciente.buscarPorId(xcodigo);
             if (paciente != null) {
                 txtNome.setText(paciente.getNome());
                 txtApelido.setText(paciente.getApelido());
@@ -941,8 +943,7 @@ public class frmPacienteCad extends javax.swing.JDialog {
 
     private void PreencheConvenio() throws SQLException {
         cmbConvenio.removeAllItems();
-        ConvenioDAO daoConvenio = new ConvenioDAO();
-        listarConvenios = ConvenioDAO.listarTodos("");
+        listarConvenios = daoConvenio.listarTodos("");
         for (int i = 0; i < listarConvenios.size(); i++) {
             cmbConvenio.addItem(listarConvenios.get(i));
         }
@@ -1132,6 +1133,6 @@ public class frmPacienteCad extends javax.swing.JDialog {
         p.setHdl(txtHDL.getText());
         p.setTriglicerideos(txtTriglicerideos.getText());
         p.setColesteroltotal(txtColesterolTotal.getText());
-        PacienteDAO.validaDados(p);
+        daoPaciente.validaDados(p);
     }
 }

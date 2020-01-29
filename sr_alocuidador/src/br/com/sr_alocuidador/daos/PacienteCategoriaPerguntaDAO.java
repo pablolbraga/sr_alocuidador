@@ -11,9 +11,11 @@ import java.util.List;
 public class PacienteCategoriaPerguntaDAO {
     
     private CategoriaPerguntaDAO daoCategPergunta;
+    private PacienteDAO daoPaciente;
     
     public PacienteCategoriaPerguntaDAO(){
         daoCategPergunta = new CategoriaPerguntaDAO();
+        daoPaciente = new PacienteDAO();
     }
     
     private void incluir(PacienteCategoriaPergunta c) throws SQLException{
@@ -81,7 +83,7 @@ public class PacienteCategoriaPerguntaDAO {
         while(rs.next()){
             c = new PacienteCategoriaPergunta();
             c.setCodigo(rs.getInt("IDCLIPERGCATEG"));
-            c.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
+            c.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
             c.setCategoriapergunta(daoCategPergunta.BuscarPorId(rs.getInt("IDPERGCATEG")));
             c.setSequencia(rs.getInt("SEQ"));
         }
@@ -100,7 +102,7 @@ public class PacienteCategoriaPerguntaDAO {
         while(rs.next()){
             PacienteCategoriaPergunta c = new PacienteCategoriaPergunta();
             c.setCodigo(rs.getInt("IDCLIPERGCATEG"));
-            c.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
+            c.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
             c.setCategoriapergunta(daoCategPergunta.BuscarPorId(rs.getInt("IDPERGCATEG")));
             c.setSequencia(rs.getInt("SEQ"));
             lista.add(c);

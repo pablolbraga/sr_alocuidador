@@ -5,6 +5,7 @@
  */
 package br.com.sr_alocuidador.views.movimentacao;
 
+import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteMedicamentoDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
 import br.com.sr_alocuidador.models.PacienteMedicamento;
@@ -23,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 public class frmPacienteMedicamentoPesq extends javax.swing.JDialog {
 
     public int xcodpaciente;
+    private PacienteDAO daoPaciente;
+    private PacienteMedicamentoDAO daoPacienteMedicamento;
     
     
     /**
@@ -251,7 +254,7 @@ public class frmPacienteMedicamentoPesq extends javax.swing.JDialog {
         
         DefaultTableModel modelo = (DefaultTableModel)tblResultado.getModel(); 
         modelo.setNumRows(0);
-        for(PacienteMedicamento c : PacienteMedicamentoDAO.listarMedicamentosPorPaciente(xcodpaciente)){
+        for(PacienteMedicamento c : daoPacienteMedicamento.listarMedicamentosPorPaciente(xcodpaciente)){
             modelo.addRow(new Object[]{
                 c.getCodigo(),
                 c.getDescricao(),
@@ -274,7 +277,7 @@ public class frmPacienteMedicamentoPesq extends javax.swing.JDialog {
     }
 
     private void excluir() throws SQLException {
-        PacienteMedicamentoDAO.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
+        daoPacienteMedicamento.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
     }
 
     private void imprimir() throws URISyntaxException, IOException {

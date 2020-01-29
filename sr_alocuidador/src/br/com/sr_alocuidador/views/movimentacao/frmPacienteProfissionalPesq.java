@@ -5,6 +5,7 @@
  */
 package br.com.sr_alocuidador.views.movimentacao;
 
+import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteProfissionalDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
 import br.com.sr_alocuidador.models.PacienteProfissional;
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmPacienteProfissionalPesq extends javax.swing.JDialog {
 
     public int xcodpaciente;
+    private PacienteProfissionalDAO daoPacienteProfissional;
     
     public frmPacienteProfissionalPesq(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -126,6 +128,7 @@ public class frmPacienteProfissionalPesq extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPacienteProfissional = new PacienteProfissionalDAO();
             Pesquisar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao listar os profissionais: " + ex.toString());
@@ -220,7 +223,7 @@ public class frmPacienteProfissionalPesq extends javax.swing.JDialog {
     private void Pesquisar() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel)tblResultado.getModel(); 
         modelo.setNumRows(0);
-        for(PacienteProfissional p : PacienteProfissionalDAO.listarDados(xcodpaciente)){
+        for(PacienteProfissional p : daoPacienteProfissional.listarDados(xcodpaciente)){
             modelo.addRow(new Object[]{
                 p.getCodigo(),
                 p.getDescricao(),
@@ -245,6 +248,6 @@ public class frmPacienteProfissionalPesq extends javax.swing.JDialog {
     }
     
     private void excluir() throws SQLException{
-        PacienteProfissionalDAO.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
+        daoPacienteProfissional.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
     }
 }

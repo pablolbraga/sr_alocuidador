@@ -23,6 +23,8 @@ import javax.swing.JOptionPane;
 public class frmPacienteVacinaCad extends javax.swing.JDialog {
 
     private List<Vacina> listaVacina = new ArrayList<>();
+    private PacienteDAO daoPaciente;
+    private PacienteVacinaDAO daoPacienteVacina;
     
     public int xcodigo;
     public int xcodpaciente;    
@@ -98,6 +100,8 @@ public class frmPacienteVacinaCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPaciente = new PacienteDAO();
+            daoPacienteVacina = new PacienteVacinaDAO();
             preencheVacina();
             pesquisar();
         } catch (SQLException ex) {
@@ -197,16 +201,16 @@ public class frmPacienteVacinaCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteVacina c = new PacienteVacina();
         c.setCodigo(xcodigo);
-        c.setPaciente(PacienteDAO.buscarPorId( xcodpaciente ));
+        c.setPaciente(daoPaciente.buscarPorId( xcodpaciente ));
         c.setVacina(((Vacina)cmbVacina.getSelectedItem()));        
         c.setData(Uteis.desformatarData(txtData.getText()));
         c.setLocal(txtLocal.getText());
         c.setObservacao(txtObservacao.getText());
-        PacienteVacinaDAO.validaDados(c);        
+        daoPacienteVacina.validaDados(c);        
     }
     
     private void pesquisar() throws SQLException {
-        PacienteVacina c = PacienteVacinaDAO.buscarPorId(xcodigo);
+        PacienteVacina c = daoPacienteVacina.buscarPorId(xcodigo);
         if (c != null){
             for(int i = 0; i < listaVacina.size(); i++){
                 if (listaVacina.get(i).getCodigo() == c.getVacina().getCodigo()){

@@ -13,11 +13,13 @@ public class PacienteDoencaDAO {
     
     private DoencaDAO daoDoenca = null;
     private ConvenioDAO daoConvenio = null;
+    private PacienteDAO daoPaciente = null;
 
     public PacienteDoencaDAO() {
         
         daoDoenca = new DoencaDAO();
         daoConvenio = new ConvenioDAO();
+        daoPaciente = new PacienteDAO();
         
     }
 
@@ -89,7 +91,7 @@ public class PacienteDoencaDAO {
         while (rs.next()) {
             c = new PacienteDoenca();
             c.setCodigo(rs.getInt("IDCLIDOE"));
-            c.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
+            c.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
             c.setDoenca(daoDoenca.BuscarPorId(rs.getInt("IDDOENCA")));
             c.setDescricao(rs.getString("DESCRICAO"));
         }
@@ -111,7 +113,7 @@ public class PacienteDoencaDAO {
         while (rs.next()) {
             PacienteDoenca c = new PacienteDoenca();
             c.setCodigo(rs.getInt("IDCLIDOE"));
-            c.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
+            c.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
             c.setDoenca(daoDoenca.BuscarPorId(rs.getInt("IDDOENCA")));
             c.setDescricao(rs.getString("DESCRICAO"));
             lista.add(c);

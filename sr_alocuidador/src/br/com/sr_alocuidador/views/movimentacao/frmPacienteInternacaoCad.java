@@ -28,6 +28,7 @@ public class frmPacienteInternacaoCad extends javax.swing.JDialog {
     private List<ConstantesItem> listaMotivo = new ArrayList<>();
     private PacienteInternacaoDAO daoPacienteInternacao;
     private ConstantesItemDAO daoConstanteItem;
+    private PacienteDAO daoPaciente;
     
     public int xcodigo;
     public int xcodpaciente;    
@@ -112,6 +113,7 @@ public class frmPacienteInternacaoCad extends javax.swing.JDialog {
         try {
             daoPacienteInternacao = new PacienteInternacaoDAO();
             daoConstanteItem = new ConstantesItemDAO();
+            daoPaciente = new PacienteDAO();
             preencheHospital();
             preencheMotivo();
             pesquisar();
@@ -212,7 +214,7 @@ public class frmPacienteInternacaoCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteInternacao c = new PacienteInternacao();
         c.setCodigo(xcodigo);
-        c.setPaciente(PacienteDAO.buscarPorId(xcodpaciente));
+        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
         c.setHospital(((Hospital)cmbHospital.getSelectedItem()));
         c.setDataini(Uteis.desformatarData(txtDataIni.getText()));
         c.setDatafim(Uteis.desformatarData(txtDataFim.getText()));

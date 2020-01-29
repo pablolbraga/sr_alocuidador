@@ -24,6 +24,8 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
     public int xcodpaciente;
     private List<ConstantesItem> listarTurnos;
     private ConstantesItemDAO daoConstanteItem;
+    private PacienteDAO daoPaciente;
+    private PacienteMedicamentoDAO daoPacienteMedicamento;
     
     /**
      * Creates new form frmPacienteMedicamentoCad
@@ -167,6 +169,8 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {        
             daoConstanteItem = new ConstantesItemDAO();
+            daoPaciente = new PacienteDAO();
+            daoPacienteMedicamento = new PacienteMedicamentoDAO();
             listarTurnos = daoConstanteItem.listarContantes(30);
             PreencheTurnos();
             Pesquisar();
@@ -256,7 +260,7 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
     }
 
     private void Pesquisar() throws SQLException {
-        PacienteMedicamento p = PacienteMedicamentoDAO.buscarPorId(xcodigo);
+        PacienteMedicamento p = daoPacienteMedicamento.buscarPorId(xcodigo);
         if (p != null){
             txtDescricao.setText(p.getDescricao());
             txtDosagem.setText(p.getDosagem());
@@ -300,7 +304,7 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
         
         PacienteMedicamento c = new PacienteMedicamento();
         c.setCodigo(xcodigo);
-        c.setPaciente(PacienteDAO.buscarPorId(xcodpaciente));
+        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
         c.setDescricao(txtDescricao.getText());
         c.setDosagem(txtDosagem.getText());
         c.setTurno((ConstantesItem)cmbTurno.getSelectedItem());
@@ -308,6 +312,6 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
         c.setAprazamento(txtAprazamento.getText());
         c.setPrescritor(txtPrescritor.getText());
         c.setObservacao(txtObservacao.getText());
-        PacienteMedicamentoDAO.validaDados(c);
+        daoPacienteMedicamento.validaDados(c);
     }
 }

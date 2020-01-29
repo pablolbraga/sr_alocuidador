@@ -13,7 +13,13 @@ import java.util.List;
 
 public class PacienteDAO {
     
-    private static void incluir(Paciente p) throws SQLException{
+    private ConvenioDAO daoConvenio;
+    
+    public PacienteDAO(){        
+        daoConvenio = new ConvenioDAO();        
+    }
+    
+    private void incluir(Paciente p) throws SQLException{
         
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         Date data = new Date();
@@ -104,7 +110,7 @@ public class PacienteDAO {
         pst.execute();
     }
     
-    private static void alterar(Paciente p) throws SQLException{
+    private void alterar(Paciente p) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES SET NOME = ?, DTNASC = ?, CSTSEXO = ?, CSTESTCIVIL = ?, CONJUGE = ?, IDCONVENIO = ?, ENDERECO = ?, ");
@@ -200,7 +206,7 @@ public class PacienteDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES WHERE IDCLIENTE = ?");
@@ -211,7 +217,7 @@ public class PacienteDAO {
         
     }
     
-    public static void validaDados(Paciente c) throws SQLException{
+    public void validaDados(Paciente c) throws SQLException{
         
         if (existeRegistro(c.getCodigo()))
             alterar(c);
@@ -220,7 +226,7 @@ public class PacienteDAO {
         
     }
     
-    public static Paciente buscarPorId(int codigo) throws SQLException{
+    public Paciente buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES WHERE IDCLIENTE = ?");
@@ -238,7 +244,7 @@ public class PacienteDAO {
             paciente.setEstadocivil(rs.getInt("CSTESTCIVIL"));
             paciente.setEscolaridade(rs.getInt("CS_ESCOLARIDADE"));
             paciente.setConjuge(rs.getString("CONJUGE"));
-            paciente.setConvenio(ConvenioDAO.buscarPorId(rs.getInt("IDCONVENIO")));            
+            paciente.setConvenio(daoConvenio.buscarPorId(rs.getInt("IDCONVENIO")));            
             paciente.setAph(rs.getString("APH"));
             paciente.setMatricula(rs.getString("MATRICULA"));
             paciente.setEndereco(rs.getString("ENDERECO"));
@@ -299,7 +305,7 @@ public class PacienteDAO {
     }
     
     
-    public static List<Paciente> listarPacientes(int convenio, String descricao) throws SQLException{
+    public List<Paciente> listarPacientes(int convenio, String descricao) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES WHERE STATUS = 'A' ");
@@ -332,7 +338,7 @@ public class PacienteDAO {
             paciente.setEstadocivil(rs.getInt("CSTESTCIVIL"));
             paciente.setEscolaridade(rs.getInt("CS_ESCOLARIDADE"));
             paciente.setConjuge(rs.getString("CONJUGE"));
-            paciente.setConvenio(ConvenioDAO.buscarPorId(rs.getInt("IDCONVENIO")));            
+            paciente.setConvenio(daoConvenio.buscarPorId(rs.getInt("IDCONVENIO")));            
             paciente.setAph(rs.getString("APH"));
             paciente.setMatricula(rs.getString("MATRICULA"));
             paciente.setEndereco(rs.getString("ENDERECO"));

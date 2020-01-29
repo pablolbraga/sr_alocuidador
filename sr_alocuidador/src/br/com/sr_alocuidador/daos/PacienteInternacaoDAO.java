@@ -11,9 +11,11 @@ import java.util.List;
 public class PacienteInternacaoDAO {
     
     private ConstantesItemDAO daoConstanteItem;
+    private PacienteDAO daoPaciente;
     
     public PacienteInternacaoDAO(){        
         daoConstanteItem = new ConstantesItemDAO();        
+        daoPaciente = new PacienteDAO();
     }
     
     private void incluir(PacienteInternacao c) throws SQLException{
@@ -94,7 +96,7 @@ public class PacienteInternacaoDAO {
         while(rs.next()){
             c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
-            c.setPaciente(PacienteDAO.buscarPorId( rs.getInt("IDCLIENTE")) );
+            c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
             c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
@@ -120,7 +122,7 @@ public class PacienteInternacaoDAO {
         while(rs.next()){
             PacienteInternacao c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
-            c.setPaciente(PacienteDAO.buscarPorId( rs.getInt("IDCLIENTE")) );
+            c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
             c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
@@ -171,7 +173,7 @@ public class PacienteInternacaoDAO {
         while(rs.next()){
             PacienteInternacao c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
-            c.setPaciente(PacienteDAO.buscarPorId( rs.getInt("IDCLIENTE")) );
+            c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
             c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
@@ -197,7 +199,7 @@ public class PacienteInternacaoDAO {
         while(rs.next()){
             PacienteInternacao c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
-            c.setPaciente(PacienteDAO.buscarPorId( rs.getInt("IDCLIENTE")) );
+            c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
             c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
@@ -223,7 +225,7 @@ public class PacienteInternacaoDAO {
         while(rs.next()){
             c = new PacienteInternacao();
             c.setCodigo(rs.getInt("IDCLIINTER"));
-            c.setPaciente(PacienteDAO.buscarPorId( rs.getInt("IDCLIENTE")) );
+            c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
             c.setHospital(HospitalDAO.buscarPorId( rs.getInt("IDHOSPITAL")) );
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));

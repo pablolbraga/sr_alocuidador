@@ -10,7 +10,13 @@ import java.util.List;
 
 public class PacienteProfissionalDAO {
     
-    private static void incluir(PacienteProfissional c) throws SQLException{
+    private PacienteDAO daoPaciente;
+    
+    public PacienteProfissionalDAO(){
+        daoPaciente = new PacienteDAO();
+    }
+    
+    private void incluir(PacienteProfissional c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO CLIENTES_PROFISSIONAL (IDCLIENTE, DESCRICAO, ESPECIALIDADE, ");
@@ -27,7 +33,7 @@ public class PacienteProfissionalDAO {
         
     }
     
-    private static void alterar(PacienteProfissional c) throws SQLException{
+    private void alterar(PacienteProfissional c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES_PROFISSIONAL SET IDCLIENTE = ?, DESCRICAO = ?, ESPECIALIDADE = ?, ");
@@ -45,7 +51,7 @@ public class PacienteProfissionalDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM CLIENTES_PROFISSIONAL WHERE IDCLIPROFISSIONAL = ?");
@@ -55,7 +61,7 @@ public class PacienteProfissionalDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_PROFISSIONAL WHERE IDCLIPROFISSIONAL = ?");
@@ -66,14 +72,14 @@ public class PacienteProfissionalDAO {
         
     }
     
-    public static void validaDados(PacienteProfissional c) throws SQLException{
+    public void validaDados(PacienteProfissional c) throws SQLException{
         if (existeRegistro(c.getCodigo()))
             alterar(c);
         else
             incluir(c);
     }
     
-    public static PacienteProfissional buscarPorId(int codigo) throws SQLException{
+    public PacienteProfissional buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_PROFISSIONAL WHERE IDCLIPROFISSIONAL = ?");
@@ -84,7 +90,7 @@ public class PacienteProfissionalDAO {
         while(rs.next()){
             c = new PacienteProfissional();
             c.setCodigo(rs.getInt("IDCLIPROFISSIONAL"));
-            c.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
+            c.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
             c.setDescricao(rs.getString("DESCRICAO"));
             c.setEspecialidade(rs.getString("ESPECIALIDADE"));
             c.setContato(rs.getString("CONTATOS"));
@@ -96,7 +102,7 @@ public class PacienteProfissionalDAO {
         
     }
     
-    public static List<PacienteProfissional> listarDados(int paciente) throws SQLException{
+    public List<PacienteProfissional> listarDados(int paciente) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_PROFISSIONAL WHERE IDCLIENTE = ? ORDER BY IDCLIPROFISSIONAL");
@@ -107,7 +113,7 @@ public class PacienteProfissionalDAO {
         while(rs.next()){
             PacienteProfissional c = new PacienteProfissional();
             c.setCodigo(rs.getInt("IDCLIPROFISSIONAL"));
-            c.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
+            c.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
             c.setDescricao(rs.getString("DESCRICAO"));
             c.setEspecialidade(rs.getString("ESPECIALIDADE"));
             c.setContato(rs.getString("CONTATOS"));

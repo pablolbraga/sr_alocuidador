@@ -19,6 +19,8 @@ public class frmPacienteProfissionalCad extends javax.swing.JDialog {
 
     public int xcodigo;
     public int xcodpaciente;
+    private PacienteDAO daoPaciente;
+    private PacienteProfissionalDAO daoPacienteProfissional;
     
     public frmPacienteProfissionalCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -136,6 +138,8 @@ public class frmPacienteProfissionalCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPaciente = new PacienteDAO();
+            daoPacienteProfissional = new PacienteProfissionalDAO();
             Pesquisar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao pesquisar o profissional: " + ex.toString());
@@ -213,7 +217,7 @@ public class frmPacienteProfissionalCad extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void Pesquisar() throws SQLException {
-        PacienteProfissional p = PacienteProfissionalDAO.buscarPorId(xcodigo);
+        PacienteProfissional p = daoPacienteProfissional.buscarPorId(xcodigo);
         if (p != null){
             txtNome.setText(p.getDescricao());
             txtEspecialidade.setText(p.getEspecialidade());
@@ -253,13 +257,13 @@ public class frmPacienteProfissionalCad extends javax.swing.JDialog {
     private void gravar() throws SQLException {
         PacienteProfissional p = new PacienteProfissional();
         p.setCodigo(xcodigo);
-        p.setPaciente(PacienteDAO.buscarPorId(xcodpaciente));
+        p.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
         p.setDescricao(txtNome.getText());
         p.setEspecialidade(txtEspecialidade.getText());
         p.setContato(txtTelefoneFixo.getText());
         p.setCelular(txtTelefoneCelular.getText());
         p.setEmail(txtEmail.getText());
         p.setRegistro(txtRegistro.getText());
-        PacienteProfissionalDAO.validaDados(p);
+        daoPacienteProfissional.validaDados(p);
     }
 }

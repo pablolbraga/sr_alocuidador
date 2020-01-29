@@ -10,7 +10,13 @@ import java.util.List;
 
 public class PacienteMedicamentoDAO {
     
-    private static void incluir(PacienteMedicamento c) throws SQLException{
+    private PacienteDAO daoPaciente;
+    
+    public PacienteMedicamentoDAO(){
+        daoPaciente = new PacienteDAO();
+    }
+    
+    private void incluir(PacienteMedicamento c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO CLIENTES_MEDICAMENTOS (IDCLIENTE, DESCRICAO, DOSAGEM, ");
@@ -29,7 +35,7 @@ public class PacienteMedicamentoDAO {
         
     }
     
-    private static void alterar(PacienteMedicamento c) throws SQLException{
+    private void alterar(PacienteMedicamento c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES_MEDICAMENTOS SET IDCLIENTE = ?, DESCRICAO = ?, DOSAGEM = ?, ");
@@ -49,7 +55,7 @@ public class PacienteMedicamentoDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM CLIENTES_MEDICAMENTOS WHERE IDCLIMEDICAMENTO = ?");
@@ -59,7 +65,7 @@ public class PacienteMedicamentoDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_MEDICAMENTOS WHERE IDCLIMEDICAMENTO = ?");
@@ -70,7 +76,7 @@ public class PacienteMedicamentoDAO {
         
     }
     
-    public static void validaDados(PacienteMedicamento c) throws SQLException{
+    public void validaDados(PacienteMedicamento c) throws SQLException{
         
         if (existeRegistro(c.getCodigo())){
             alterar(c);
@@ -80,7 +86,7 @@ public class PacienteMedicamentoDAO {
         
     }
     
-    public static PacienteMedicamento buscarPorId(int codigo) throws SQLException{
+    public PacienteMedicamento buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_MEDICAMENTOS WHERE IDCLIMEDICAMENTO = ? ORDER BY TURNO");
@@ -92,7 +98,7 @@ public class PacienteMedicamentoDAO {
         while(rs.next()){
             p = new PacienteMedicamento();
             p.setCodigo(rs.getInt("IDCLIMEDICAMENTO"));
-            p.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
+            p.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
             p.setDescricao(rs.getString("DESCRICAO"));
             p.setDosagem(rs.getString("DOSAGEM"));
             p.setHorario(rs.getString("HORARIO"));
@@ -105,7 +111,7 @@ public class PacienteMedicamentoDAO {
         
     }
     
-    public static List<PacienteMedicamento> listarMedicamentosPorPaciente(int paciente) throws SQLException{
+    public List<PacienteMedicamento> listarMedicamentosPorPaciente(int paciente) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_MEDICAMENTOS WHERE IDCLIENTE = ? ORDER BY TURNO");
@@ -117,7 +123,7 @@ public class PacienteMedicamentoDAO {
         while(rs.next()){
             PacienteMedicamento p = new PacienteMedicamento();
             p.setCodigo(rs.getInt("IDCLIMEDICAMENTO"));
-            p.setPaciente(PacienteDAO.buscarPorId(rs.getInt("IDCLIENTE")));
+            p.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
             p.setDescricao(rs.getString("DESCRICAO"));
             p.setDosagem(rs.getString("DOSAGEM"));
             p.setHorario(rs.getString("HORARIO"));

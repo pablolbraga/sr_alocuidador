@@ -3,7 +3,6 @@ package br.com.sr_alocuidador.daos;
 import br.com.sr_alocuidador.conexao.Conexao;
 import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteVacina;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,15 @@ import java.util.List;
 
 public class PacienteVacinaDAO {
     
-    private static void incluir(PacienteVacina c) throws SQLException{
+    private PacienteDAO daoPaciente;
+    private ConvenioDAO daoConvenio;
+    
+    public PacienteVacinaDAO(){
+        daoPaciente = new PacienteDAO();
+        daoConvenio = new ConvenioDAO();
+    }
+    
+    private void incluir(PacienteVacina c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO CLIENTES_VACINA (IDCLIENTE, IDVACINA, DATA, LOCAL, OBSERVACAO) ");
@@ -27,7 +34,7 @@ public class PacienteVacinaDAO {
         
     }
     
-    private static void alterar(PacienteVacina c) throws SQLException{
+    private void alterar(PacienteVacina c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES_VACINA SET IDCLIENTE = ?, IDVACINA = ?, DATA = ?, LOCAL = ?, OBSERVACAO = ? WHERE ID = ? ");
@@ -42,7 +49,7 @@ public class PacienteVacinaDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM CLIENTES_VACINA WHERE IDCLIINTER = ?");
@@ -52,7 +59,7 @@ public class PacienteVacinaDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_VACINA CC WHERE CC.IDCLIINTER = ?");
@@ -63,7 +70,7 @@ public class PacienteVacinaDAO {
         
     }
     
-    public static void validaDados(PacienteVacina c) throws SQLException{
+    public void validaDados(PacienteVacina c) throws SQLException{
         if (existeRegistro(c.getCodigo())){
             alterar(c);
         } else {
@@ -71,7 +78,7 @@ public class PacienteVacinaDAO {
         }
     }
     
-    public static PacienteVacina buscarPorId(int codigo) throws SQLException{
+    public PacienteVacina buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT cv.*, c.nome as nmpaciente, v.nome as nmvacina FROM alocuidador.clientes_vacina cv ");
@@ -84,7 +91,7 @@ public class PacienteVacinaDAO {
         while(rs.next()){
             c = new PacienteVacina();
             c.setCodigo(rs.getInt("ID"));
-            c.setPaciente(PacienteDAO.buscarPorId( rs.getInt("IDCLIENTE")) );
+            c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
             c.setVacina(VacinaDAO.buscarPorId(rs.getInt("IDVACINA")));
             c.setData(rs.getString("DATA"));
             c.setLocal(rs.getString("LOCAL"));
@@ -94,7 +101,7 @@ public class PacienteVacinaDAO {
         
     }
     
-    public static List<PacienteVacina> listarVacinasPorPaciente(int paciente) throws SQLException{
+    public List<PacienteVacina> listarVacinasPorPaciente(int paciente) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT cv.*, c.nome as nmpaciente, v.nome as nmvacina FROM alocuidador.clientes_vacina cv ");
@@ -107,7 +114,7 @@ public class PacienteVacinaDAO {
         while(rs.next()){
             PacienteVacina c = new PacienteVacina();
             c.setCodigo(rs.getInt("ID"));
-            c.setPaciente(PacienteDAO.buscarPorId( rs.getInt("IDCLIENTE")) );
+            c.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE")) );
             c.setVacina(VacinaDAO.buscarPorId(rs.getInt("IDVACINA")));
             c.setData(rs.getString("DATA"));
             c.setLocal(rs.getString("LOCAL"));
@@ -118,7 +125,7 @@ public class PacienteVacinaDAO {
         
     }
     
-    public static List<Paciente> listarPacientesPorVacina(String vacinas, int qtde, int convenio) throws SQLException{
+    public List<Paciente> listarPacientesPorVacina(String vacinas, int qtde, int convenio) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT J.IDCLIENTE, J.NMCLIENTE, J.IDCONVENIO, COUNT(J.IDCLIENTE) AS QTDE FROM (");
@@ -138,7 +145,7 @@ public class PacienteVacinaDAO {
             Paciente c = new Paciente();
             c.setCodigo(rs.getInt("IDCLIENTE"));
             c.setNome(rs.getString("NMCLIENTE"));
-            c.setConvenio(ConvenioDAO.buscarPorId(rs.getInt("IDCONVENIO")));
+            c.setConvenio(daoConvenio.buscarPorId(rs.getInt("IDCONVENIO")));
             lista.add(c);
         }
         return lista;

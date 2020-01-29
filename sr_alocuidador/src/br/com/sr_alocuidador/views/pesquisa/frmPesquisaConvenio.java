@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmPesquisaConvenio extends javax.swing.JDialog {
 
     public Convenio xconvenio = null;
+    private ConvenioDAO daoConvenio = null;
     
     public frmPesquisaConvenio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -133,6 +134,7 @@ public class frmPesquisaConvenio extends javax.swing.JDialog {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
+            daoConvenio = new ConvenioDAO();
             pesquisar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao realizar a pesquisa.\nErro: " + ex.getMessage());
@@ -207,7 +209,7 @@ public class frmPesquisaConvenio extends javax.swing.JDialog {
     private void pesquisar() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setNumRows(0);
-        List<Convenio> lista = ConvenioDAO.listarTodos(txtPesquisa.getText());
+        List<Convenio> lista = daoConvenio.listarTodos(txtPesquisa.getText());
         if (lista.size() > 0){            
             for(Convenio c : lista){
                 modelo.addRow(new Object[]{
@@ -223,7 +225,7 @@ public class frmPesquisaConvenio extends javax.swing.JDialog {
     private void retornarDados() throws SQLException {
         if (Uteis.linhaSelecionada(tblResultado)){
             int codigoSelecionado = Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString());
-            xconvenio = ConvenioDAO.buscarPorId(codigoSelecionado);
+            xconvenio = daoConvenio.buscarPorId(codigoSelecionado);
             
         }
     }

@@ -14,9 +14,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class frmPacientePesq extends javax.swing.JDialog {
 
-    /**
-     * Creates new form frmPacientePesq
-     */
+    private PacienteDAO daoPaciente;
+    private ConvenioDAO daoConvenio;
+    
     public frmPacientePesq(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -346,6 +346,8 @@ public class frmPacientePesq extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPaciente = new PacienteDAO();
+            daoConvenio = new ConvenioDAO();
             preencheConvenios();
         } catch (SQLException ex) {
             Logger.getLogger(frmPacientePesq.class.getName()).log(Level.SEVERE, null, ex);
@@ -600,7 +602,7 @@ public class frmPacientePesq extends javax.swing.JDialog {
 
     private void preencheConvenios() throws SQLException {
         cmbPesqConvenio.removeAllItems();
-        for (Convenio c : ConvenioDAO.listarTodos("")) {
+        for (Convenio c : daoConvenio.listarTodos("")) {
             cmbPesqConvenio.addItem(c);
         }
         cmbPesqConvenio.setSelectedIndex(-1);
@@ -617,7 +619,7 @@ public class frmPacientePesq extends javax.swing.JDialog {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setNumRows(0);
 
-        for (Paciente p : PacienteDAO.listarPacientes(convenio, txtPesqPaciente.getText())) {
+        for (Paciente p : daoPaciente.listarPacientes(convenio, txtPesqPaciente.getText())) {
             modelo.addRow(new Object[]{
                 p.getCodigo(),
                 p.getNome(),
