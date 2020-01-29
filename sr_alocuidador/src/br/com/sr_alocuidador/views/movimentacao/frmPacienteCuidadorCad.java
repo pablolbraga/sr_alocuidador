@@ -20,6 +20,7 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
 
     public int xcodpaciente;
     public int xcodigo;
+    private PacienteCuidadorDAO daoPacienteCuidador;
     
     /**
      * Creates new form frmPacienteCuidadorCad
@@ -196,6 +197,7 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPacienteCuidador = new PacienteCuidadorDAO();
             pesquisar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro encontrado: " + ex.toString());
@@ -292,7 +294,7 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
 
     private void pesquisar() throws SQLException {
         
-        PacienteCuidador c = PacienteCuidadorDAO.buscarPorId(xcodigo);
+        PacienteCuidador c = daoPacienteCuidador.buscarPorId(xcodigo);
         if (c != null){
             txtNome.setText(c.getNome());
             txtNascimento.setText(Uteis.formatarData(c.getNascimento()));
@@ -397,7 +399,7 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
         c.setTelefonecelular(txtFoneCelular.getText());
         c.setEmail(txtEmail.getText());
         c.setSituacao(cmbSituacao.getSelectedIndex());
-        PacienteCuidadorDAO.validaDados(c);        
+        daoPacienteCuidador.validaDados(c);        
         
     }
 }

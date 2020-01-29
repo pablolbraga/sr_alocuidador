@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PacienteCuidadorDAO {
     
-    private static void incluir(PacienteCuidador c) throws SQLException{
+    private void incluir(PacienteCuidador c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO CLIENTES_CUIDADOR (IDCLIENTE, NOME, DTNASC, CSTSEXO, CSTESTCIVIL, ENDERECO, BAIRRO, CIDADE, UF, CEP");
@@ -32,10 +32,11 @@ public class PacienteCuidadorDAO {
         pst.setString(14, c.getTelefonecelular());
         pst.setInt(15, c.getSituacao());
         pst.execute();
+        pst.close();
         
     }
     
-    private static void alterar(PacienteCuidador c) throws SQLException{
+    private void alterar(PacienteCuidador c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES_CUIDADOR SET IDCLIENTE = ?, NOME = ?, DTNASC = ?, CSTSEXO = ?, CSTESTCIVIL = ?, ENDERECO = ?, BAIRRO = ?, CIDADE = ?, UF = ?, CEP = ?");
@@ -58,20 +59,22 @@ public class PacienteCuidadorDAO {
         pst.setInt(15, c.getSituacao());
         pst.setInt(16, c.getCodigo());
         pst.execute();
+        pst.close();
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM CLIENTES_CUIDADOR WHERE IDCLICUIDADOR = ?");
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sql.toString());
         pst.setInt(1, codigo);
         pst.execute();
+        pst.close();
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_CUIDADOR WHERE IDCLICUIDADOR = ?");
@@ -82,7 +85,7 @@ public class PacienteCuidadorDAO {
         
     }
     
-    public static void validaDados(PacienteCuidador c) throws SQLException{
+    public void validaDados(PacienteCuidador c) throws SQLException{
         
         if (existeRegistro(c.getCodigo()))
             alterar(c);
@@ -91,7 +94,7 @@ public class PacienteCuidadorDAO {
         
     }
     
-    public static PacienteCuidador buscarPorId(int codigo) throws SQLException{
+    public PacienteCuidador buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CC.*, (SELECT GP.NOME FROM CONSTANTES_ITEM GP WHERE GP.IDCONSTANTE = 28 AND INDICE = CC.PARENTESCO) AS GRAUPARENTESCO FROM CLIENTES_CUIDADOR CC WHERE CC.IDCLICUIDADOR = ?");
@@ -123,7 +126,7 @@ public class PacienteCuidadorDAO {
         
     }
     
-    public static List<PacienteCuidador> listarCuidadores(int paciente){
+    public List<PacienteCuidador> listarCuidadores(int paciente){
         
         StringBuilder sql = new StringBuilder();
         List<PacienteCuidador> lista = new ArrayList<>();
