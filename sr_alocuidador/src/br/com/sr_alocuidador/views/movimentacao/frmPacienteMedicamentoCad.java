@@ -23,6 +23,7 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
     public int xcodigo;
     public int xcodpaciente;
     private List<ConstantesItem> listarTurnos;
+    private ConstantesItemDAO daoConstanteItem;
     
     /**
      * Creates new form frmPacienteMedicamentoCad
@@ -165,7 +166,8 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {        
-            listarTurnos = ConstantesItemDAO.listarContantes(30);
+            daoConstanteItem = new ConstantesItemDAO();
+            listarTurnos = daoConstanteItem.listarContantes(30);
             PreencheTurnos();
             Pesquisar();
         } catch (SQLException ex) {

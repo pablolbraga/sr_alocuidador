@@ -26,6 +26,7 @@ public class frmPacienteCad extends javax.swing.JDialog {
     public int xcodigo;
     private PacienteDAO daoPaciente;
     private List<Convenio> listarConvenios;
+    private PacienteInternacaoDAO daoPacienteInternacao;
 
     /**
      * Creates new form frmPacienteCad
@@ -585,6 +586,7 @@ public class frmPacienteCad extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         daoPaciente = new PacienteDAO();
+        daoPacienteInternacao = new PacienteInternacaoDAO();
         try {
             PreencheConvenio();
         } catch (SQLException ex) {
@@ -1062,7 +1064,7 @@ public class frmPacienteCad extends javax.swing.JDialog {
     }
 
     private int retornarIndiceLace(int codpaciente) throws SQLException {
-        return PacienteInternacaoDAO.retornarUltimoIndiceLace(codpaciente);
+        return daoPacienteInternacao.retornarUltimoIndiceLace(codpaciente);
     }
 
     private void gravar() throws SQLException {

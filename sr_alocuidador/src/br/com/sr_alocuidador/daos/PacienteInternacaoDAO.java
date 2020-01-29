@@ -10,7 +10,13 @@ import java.util.List;
 
 public class PacienteInternacaoDAO {
     
-    private static void incluir(PacienteInternacao c) throws SQLException{
+    private ConstantesItemDAO daoConstanteItem;
+    
+    public PacienteInternacaoDAO(){        
+        daoConstanteItem = new ConstantesItemDAO();        
+    }
+    
+    private void incluir(PacienteInternacao c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO CLIENTES_INTERNACAO (IDCLIENTE, IDHOSPITAL, DATAINI, DATAFIM, DIAGNOSTICO, MOTIVO, STATUS_LACE) ");
@@ -27,7 +33,7 @@ public class PacienteInternacaoDAO {
         
     }
     
-    private static void alterar(PacienteInternacao c) throws SQLException{
+    private void alterar(PacienteInternacao c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES_INTERNACAO SET IDCLIENTE = ?, IDHOSPITAL = ?, DATAINI = ?, DATAFIM = ?, DIAGNOSTICO = ?, MOTIVO = ? WHERE IDCLIINTER = ? ");
@@ -44,7 +50,7 @@ public class PacienteInternacaoDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM CLIENTES_INTERNACAO WHERE IDCLIINTER = ?");
@@ -54,7 +60,7 @@ public class PacienteInternacaoDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_INTERNACAO CC WHERE CC.IDCLIINTER = ?");
@@ -65,7 +71,7 @@ public class PacienteInternacaoDAO {
         
     }
     
-    public static void validaDados(PacienteInternacao c) throws SQLException{
+    public void validaDados(PacienteInternacao c) throws SQLException{
         if (existeRegistro(c.getCodigo())){
             alterar(c);
         } else {
@@ -73,7 +79,7 @@ public class PacienteInternacaoDAO {
         }
     }
     
-    public static PacienteInternacao buscarPorId(int codigo) throws SQLException{
+    public PacienteInternacao buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CC.*, C.NOME AS NMPACIENTE, CI.NOME AS NMMOTIVO, H.NOME AS NMHOSPITAL ");
@@ -93,13 +99,13 @@ public class PacienteInternacaoDAO {
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
-            c.setIdmotivo(ConstantesItemDAO.buscarPorId(24, rs.getInt("MOTIVO")));
+            c.setIdmotivo(daoConstanteItem.buscarPorId(24, rs.getInt("MOTIVO")));
         }
         return c;
         
     }
     
-    public static List<PacienteInternacao> listarConsultasPorPaciente(int paciente) throws SQLException{
+    public List<PacienteInternacao> listarConsultasPorPaciente(int paciente) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CC.*, C.NOME AS NMPACIENTE, CI.NOME AS NMMOTIVO, H.NOME AS NMHOSPITAL ");
@@ -119,7 +125,7 @@ public class PacienteInternacaoDAO {
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
-            c.setIdmotivo(ConstantesItemDAO.buscarPorId(24, rs.getInt("MOTIVO")));
+            c.setIdmotivo(daoConstanteItem.buscarPorId(24, rs.getInt("MOTIVO")));
             lista.add(c);
         }
         return lista;
@@ -170,7 +176,7 @@ public class PacienteInternacaoDAO {
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
-            c.setIdmotivo(ConstantesItemDAO.buscarPorId(24, rs.getInt("MOTIVO")));
+            c.setIdmotivo(daoConstanteItem.buscarPorId(24, rs.getInt("MOTIVO")));
             lista.add(c);
         }
         return lista;
@@ -196,7 +202,7 @@ public class PacienteInternacaoDAO {
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
-            c.setIdmotivo(ConstantesItemDAO.buscarPorId(24, rs.getInt("MOTIVO")));
+            c.setIdmotivo(daoConstanteItem.buscarPorId(24, rs.getInt("MOTIVO")));
             lista.add(c);
         }
         return lista;       
@@ -222,7 +228,7 @@ public class PacienteInternacaoDAO {
             c.setDataini(rs.getString("DATAINI"));
             c.setDatafim(rs.getString("DATAFIM"));
             c.setDiagnostico(rs.getString("DIAGNOSTICO"));            
-            c.setIdmotivo(ConstantesItemDAO.buscarPorId(24, rs.getInt("MOTIVO")));
+            c.setIdmotivo(daoConstanteItem.buscarPorId(24, rs.getInt("MOTIVO")));
         }
         return c;
         
@@ -239,7 +245,7 @@ public class PacienteInternacaoDAO {
         
     }
     
-    public static int retornarUltimoIndiceLace(int paciente) throws SQLException{
+    public int retornarUltimoIndiceLace(int paciente) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_INTERNACAO WHERE STATUS_LACE = 'F' AND IDCLIENTE = ? ORDER BY IDCLIINTER DESC LIMIT 1 ");

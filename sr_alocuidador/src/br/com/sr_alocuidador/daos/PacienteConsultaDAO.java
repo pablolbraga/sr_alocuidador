@@ -10,7 +10,13 @@ import java.util.List;
 
 public class PacienteConsultaDAO {
     
-    private static void incluir(PacienteConsulta c) throws SQLException{
+    private ConstantesItemDAO daoConstanteItem;
+    
+    public PacienteConsultaDAO(){        
+        daoConstanteItem = new ConstantesItemDAO();        
+    }
+    
+    private void incluir(PacienteConsulta c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO CLIENTES_CONSULTAS (IDCLIENTE, IDHOSPITAL, DATA, EMERGENCIA, OBSERVACAO, MOTIVO) ");
@@ -26,7 +32,7 @@ public class PacienteConsultaDAO {
         
     }
     
-    private static void alterar(PacienteConsulta c) throws SQLException{
+    private void alterar(PacienteConsulta c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES_CONSULTAS SET IDCLIENTE = ?, IDHOSPITAL = ?, DATA = ?");
@@ -43,7 +49,7 @@ public class PacienteConsultaDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM CLIENTES_CONSULTAS WHERE ID = ?");
@@ -53,7 +59,7 @@ public class PacienteConsultaDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_CONSULTAS CC WHERE CC.ID = ?");
@@ -64,7 +70,7 @@ public class PacienteConsultaDAO {
         
     }
     
-    public static void validaDados(PacienteConsulta c) throws SQLException{
+    public void validaDados(PacienteConsulta c) throws SQLException{
         if (existeRegistro(c.getCodigo())){
             alterar(c);
         } else {
@@ -72,7 +78,7 @@ public class PacienteConsultaDAO {
         }
     }
     
-    public static PacienteConsulta buscarPorId(int codigo) throws SQLException{
+    public PacienteConsulta buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CC.*, C.NOME AS NMPACIENTE, CI.NOME AS NMMOTIVO, H.NOME AS NMHOSPITAL ");
@@ -92,13 +98,13 @@ public class PacienteConsultaDAO {
             c.setData(rs.getString("DATA"));
             c.setEmergencia(rs.getString("EMERGENCIA"));
             c.setObservacao(rs.getString("OBSERVACAO"));
-            c.setMotivo(ConstantesItemDAO.buscarPorId(23, rs.getInt("MOTIVO")));
+            c.setMotivo(daoConstanteItem.buscarPorId(23, rs.getInt("MOTIVO")));
         }
         return c;
         
     }
     
-    public static List<PacienteConsulta> listarConsultasPorPaciente(int paciente) throws SQLException{
+    public List<PacienteConsulta> listarConsultasPorPaciente(int paciente) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CC.*, C.NOME AS NMPACIENTE, CI.NOME AS NMMOTIVO, H.NOME AS NMHOSPITAL ");
@@ -118,14 +124,14 @@ public class PacienteConsultaDAO {
             c.setData(rs.getString("DATA"));
             c.setEmergencia(rs.getString("EMERGENCIA"));
             c.setObservacao(rs.getString("OBSERVACAO"));
-            c.setMotivo(ConstantesItemDAO.buscarPorId(23, rs.getInt("MOTIVO")));
+            c.setMotivo(daoConstanteItem.buscarPorId(23, rs.getInt("MOTIVO")));
             lista.add(c);
         }
         return lista;
         
     }
     
-    public static List<PacienteConsulta> listarConsultasGeral(int convenio, String periodoini, String periodofim, String emergencia) throws SQLException{
+    public List<PacienteConsulta> listarConsultasGeral(int convenio, String periodoini, String periodofim, String emergencia) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CC.*, C.NOME AS NMPACIENTE, CI.NOME AS NMMOTIVO, H.NOME AS NMHOSPITAL ");
@@ -171,7 +177,7 @@ public class PacienteConsultaDAO {
             c.setData(rs.getString("DATA"));
             c.setEmergencia(rs.getString("EMERGENCIA"));
             c.setObservacao(rs.getString("OBSERVACAO"));
-            c.setMotivo(ConstantesItemDAO.buscarPorId(23, rs.getInt("MOTIVO")));
+            c.setMotivo(daoConstanteItem.buscarPorId(23, rs.getInt("MOTIVO")));
             lista.add(c);
         }
         return lista;

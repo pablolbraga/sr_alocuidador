@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ConstantesDAO {
     
-    public static Constantes buscarPorId(int codigo) throws SQLException{
+    public Constantes buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CONSTANTES WHERE IDCONSTANTE = ?");

@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmPacienteConsultaPesq extends javax.swing.JDialog {
 
     public int xcodpaciente;
+    private PacienteConsultaDAO daoPacienteConsulta;
         
     public frmPacienteConsultaPesq(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -126,6 +127,7 @@ public class frmPacienteConsultaPesq extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPacienteConsulta = new PacienteConsultaDAO();
             pesquisar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao pesquisar as consultas. " + ex.toString());
@@ -216,7 +218,7 @@ public class frmPacienteConsultaPesq extends javax.swing.JDialog {
     private void pesquisar() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel)tblResultado.getModel(); 
         modelo.setNumRows(0);        
-        for(PacienteConsulta c : PacienteConsultaDAO.listarConsultasPorPaciente(xcodpaciente)){
+        for(PacienteConsulta c : daoPacienteConsulta.listarConsultasPorPaciente(xcodpaciente)){
             modelo.addRow(new Object[]{
                 c.getCodigo(),
                 c.getHospital().getNome(),
@@ -243,6 +245,6 @@ public class frmPacienteConsultaPesq extends javax.swing.JDialog {
     }
     
     private void excluir(int codigo) throws SQLException{
-        PacienteConsultaDAO.excluir(codigo);
+        daoPacienteConsulta.excluir(codigo);
     }
 }

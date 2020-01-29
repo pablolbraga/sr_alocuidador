@@ -26,6 +26,8 @@ public class frmPacienteConsultaCad extends javax.swing.JDialog {
 
     private List<Hospital> listaHospital = new ArrayList<>();
     private List<ConstantesItem> listaMotivo = new ArrayList<>();
+    private PacienteConsultaDAO daoPacienteConsulta;
+    private ConstantesItemDAO daoConstanteItem;
     
     public int xcodigo;
     public int xcodpaciente;    
@@ -106,6 +108,8 @@ public class frmPacienteConsultaCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPacienteConsulta = new PacienteConsultaDAO();
+            daoConstanteItem = new ConstantesItemDAO();
             preencheHospital();
             preencheMotivo();
             pesquisar();
@@ -210,11 +214,11 @@ public class frmPacienteConsultaCad extends javax.swing.JDialog {
         c.setMotivo(((ConstantesItem)cmbMotivo.getSelectedItem()));
         c.setEmergencia(cbxEmergencia.isSelected() ? "S" : "N");
         c.setObservacao(txtObservacao.getText());
-        PacienteConsultaDAO.validaDados(c);        
+        daoPacienteConsulta.validaDados(c);        
     }
     
     private void pesquisar() throws SQLException {
-        PacienteConsulta c = PacienteConsultaDAO.buscarPorId(xcodigo);
+        PacienteConsulta c = daoPacienteConsulta.buscarPorId(xcodigo);
         if (c != null){
             for(int i = 0; i < listaHospital.size(); i++){
                 if (listaHospital.get(i).getCodigo() == c.getHospital().getCodigo()){
@@ -246,7 +250,7 @@ public class frmPacienteConsultaCad extends javax.swing.JDialog {
     
     private void preencheMotivo() throws SQLException{
         cmbMotivo.removeAllItems();
-        listaMotivo = ConstantesItemDAO.listarContantes(23);
+        listaMotivo = daoConstanteItem.listarContantes(23);
         for(ConstantesItem c : listaMotivo){
             cmbMotivo.addItem(c);
         }

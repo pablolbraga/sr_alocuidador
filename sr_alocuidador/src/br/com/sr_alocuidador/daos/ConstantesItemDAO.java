@@ -10,7 +10,13 @@ import java.util.List;
 
 public class ConstantesItemDAO {
     
-    public static List<ConstantesItem> listarContantes(int constante) throws SQLException{
+    private final ConstantesDAO daoConstante;
+    
+    public ConstantesItemDAO(){
+        daoConstante = new ConstantesDAO();
+    }
+    
+    public List<ConstantesItem> listarContantes(int constante) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CONSTANTES_ITEM WHERE IDCONSTANTE = ? ORDER BY INDICE");
@@ -21,7 +27,7 @@ public class ConstantesItemDAO {
         while(rs.next()){
             ConstantesItem c = new ConstantesItem();
             c.setCodigo(rs.getInt("IDCONSTANTEITEM"));
-            c.setConstante(ConstantesDAO.buscarPorId(rs.getInt("IDCONSTANTE")));
+            c.setConstante(daoConstante.buscarPorId(rs.getInt("IDCONSTANTE")));
             c.setNome(rs.getString("NOME"));
             c.setIndice(rs.getInt("INDICE"));
             lista.add(c);
@@ -29,19 +35,18 @@ public class ConstantesItemDAO {
         return lista;
     }
     
-    public static ConstantesItem buscarPorId(int constante, int indice) throws SQLException{
+    public ConstantesItem buscarPorId(int constante, int indice) throws SQLException{
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CONSTANTES_ITEM WHERE IDCONSTANTE = ? AND INDICE = ? ORDER BY INDICE");
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sql.toString());
         pst.setInt(1, constante);
         pst.setInt(2, indice);
         ResultSet rs = pst.executeQuery();
-        ConstantesDAO daoConstante = new ConstantesDAO();
         ConstantesItem c = null;
         while(rs.next()){
             c = new ConstantesItem();
             c.setCodigo(rs.getInt("IDCONSTANTEITEM"));
-            c.setConstante(ConstantesDAO.buscarPorId(rs.getInt("IDCONSTANTE")));
+            c.setConstante(daoConstante.buscarPorId(rs.getInt("IDCONSTANTE")));
             c.setNome(rs.getString("NOME"));
             c.setIndice(rs.getInt("INDICE"));            
         }
