@@ -10,6 +10,7 @@ import br.com.sr_alocuidador.daos.PacienteCategoriaPerguntaDAO;
 import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.helpers.JtextFieldSomenteNumeros;
 import br.com.sr_alocuidador.models.CategoriaPergunta;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteCategoriaPergunta;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,10 +26,9 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
     private List<CategoriaPergunta> listaCategoriaPergunta = new ArrayList<>();
     private PacienteCategoriaPerguntaDAO daoPacienteCategPergunta;
     private CategoriaPerguntaDAO daoCategPergunta;
-    private PacienteDAO daoPaciente;
     
     public int xcodigo;
-    public int xcodpaciente;    
+    public Paciente xpaciente;    
     
     public frmPacienteCategoriaPerguntaCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -90,7 +90,6 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
         try {
             daoPacienteCategPergunta = new PacienteCategoriaPerguntaDAO();
             daoCategPergunta = new CategoriaPerguntaDAO();
-            daoPaciente = new PacienteDAO();
             preencheCategoria();
             pesquisar();
         } catch (SQLException ex) {
@@ -185,7 +184,7 @@ public class frmPacienteCategoriaPerguntaCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteCategoriaPergunta c = new PacienteCategoriaPergunta();
         c.setCodigo(xcodigo);
-        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
+        c.setPaciente(xpaciente);
         c.setCategoriapergunta(((CategoriaPergunta)cmbCategoriaPergunta.getSelectedItem()));
         c.setSequencia(Integer.parseInt(txtSequencia.getText()));
         daoPacienteCategPergunta.validaDados(c);        

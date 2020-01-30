@@ -7,6 +7,7 @@ package br.com.sr_alocuidador.views.movimentacao;
 
 import br.com.sr_alocuidador.daos.PacienteCategoriaPerguntaDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteCategoriaPergunta;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmPacienteCategoriaPerguntaPesq extends javax.swing.JDialog {
 
-    public int xcodpaciente;
+    public Paciente xpaciente;
     private PacienteCategoriaPerguntaDAO daoPacienteCategPergunta;
     
     public frmPacienteCategoriaPerguntaPesq(java.awt.Frame parent, boolean modal) {
@@ -226,7 +227,7 @@ public class frmPacienteCategoriaPerguntaPesq extends javax.swing.JDialog {
     private void pesquisar() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel)tblResultado.getModel(); 
         modelo.setNumRows(0);        
-        for(PacienteCategoriaPergunta c : daoPacienteCategPergunta.listarCategoriasPorPaciente(xcodpaciente)){
+        for(PacienteCategoriaPergunta c : daoPacienteCategPergunta.listarCategoriasPorPaciente(xpaciente.getCodigo())){
             modelo.addRow(new Object[]{
                 c.getCodigo(),
                 c.getCategoriapergunta().getNome(),
@@ -238,13 +239,13 @@ public class frmPacienteCategoriaPerguntaPesq extends javax.swing.JDialog {
     private void incluir(){
         frmPacienteCategoriaPerguntaCad f = new frmPacienteCategoriaPerguntaCad(null, rootPaneCheckingEnabled);
         f.xcodigo = 0;
-        f.xcodpaciente = xcodpaciente;
+        f.xpaciente = xpaciente;
         f.setVisible(true);
     }
 
     private void alterar() {
         frmPacienteCategoriaPerguntaCad f = new frmPacienteCategoriaPerguntaCad(null, rootPaneCheckingEnabled);
-        f.xcodpaciente = xcodpaciente;
+        f.xpaciente = xpaciente;
         f.xcodigo = Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString());
         f.setVisible(true);        
     }
