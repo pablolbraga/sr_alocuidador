@@ -8,6 +8,7 @@ package br.com.sr_alocuidador.views.movimentacao;
 import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteMedicamentoDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteMedicamento;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -23,8 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmPacienteMedicamentoPesq extends javax.swing.JDialog {
 
-    public int xcodpaciente;
-    private PacienteDAO daoPaciente;
+    public Paciente xpaciente;
     private PacienteMedicamentoDAO daoPacienteMedicamento;
     
     
@@ -156,7 +156,7 @@ public class frmPacienteMedicamentoPesq extends javax.swing.JDialog {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         frmPacienteMedicamentoCad f = new frmPacienteMedicamentoCad(null, rootPaneCheckingEnabled);
         f.xcodigo = 0;
-        f.xcodpaciente = xcodpaciente;
+        f.xpaciente = xpaciente;
         f.setVisible(true);
         try {
             PreencheMedicamentos();
@@ -254,7 +254,7 @@ public class frmPacienteMedicamentoPesq extends javax.swing.JDialog {
         
         DefaultTableModel modelo = (DefaultTableModel)tblResultado.getModel(); 
         modelo.setNumRows(0);
-        for(PacienteMedicamento c : daoPacienteMedicamento.listarMedicamentosPorPaciente(xcodpaciente)){
+        for(PacienteMedicamento c : daoPacienteMedicamento.listarMedicamentosPorPaciente(xpaciente.getCodigo())){
             modelo.addRow(new Object[]{
                 c.getCodigo(),
                 c.getDescricao(),
@@ -272,7 +272,7 @@ public class frmPacienteMedicamentoPesq extends javax.swing.JDialog {
     private void Alterar() {
         frmPacienteMedicamentoCad f = new frmPacienteMedicamentoCad(null, rootPaneCheckingEnabled);
         f.xcodigo = Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString());
-        f.xcodpaciente = xcodpaciente;
+        f.xpaciente = xpaciente;
         f.setVisible(true);
     }
 
@@ -281,6 +281,6 @@ public class frmPacienteMedicamentoPesq extends javax.swing.JDialog {
     }
 
     private void imprimir() throws URISyntaxException, IOException {
-        java.awt.Desktop.getDesktop().browse(new java.net.URI("http://192.168.0.103/alocuidador/ac/cadastros/clientesmedicacao_rel.php?cod=" + xcodpaciente + "&tipo=I"));
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("http://192.168.0.103/alocuidador/ac/cadastros/clientesmedicacao_rel.php?cod=" + xpaciente.getCodigo() + "&tipo=I"));
     }
 }

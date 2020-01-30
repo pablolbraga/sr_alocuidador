@@ -9,6 +9,7 @@ import br.com.sr_alocuidador.daos.ConstantesItemDAO;
 import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteMedicamentoDAO;
 import br.com.sr_alocuidador.models.ConstantesItem;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteMedicamento;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,10 +22,9 @@ import javax.swing.JOptionPane;
 public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
 
     public int xcodigo;
-    public int xcodpaciente;
+    public Paciente xpaciente;
     private List<ConstantesItem> listarTurnos;
     private ConstantesItemDAO daoConstanteItem;
-    private PacienteDAO daoPaciente;
     private PacienteMedicamentoDAO daoPacienteMedicamento;
     
     /**
@@ -169,7 +169,6 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {        
             daoConstanteItem = new ConstantesItemDAO();
-            daoPaciente = new PacienteDAO();
             daoPacienteMedicamento = new PacienteMedicamentoDAO();
             listarTurnos = daoConstanteItem.listarContantes(30);
             PreencheTurnos();
@@ -304,7 +303,7 @@ public class frmPacienteMedicamentoCad extends javax.swing.JDialog {
         
         PacienteMedicamento c = new PacienteMedicamento();
         c.setCodigo(xcodigo);
-        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
+        c.setPaciente(xpaciente);
         c.setDescricao(txtDescricao.getText());
         c.setDosagem(txtDosagem.getText());
         c.setTurno((ConstantesItem)cmbTurno.getSelectedItem());
