@@ -3,16 +3,14 @@ package br.com.sr_alocuidador.models;
 public class PacienteResponsavel extends Endereco {
     
     private int codigo;
-    private int paciente;
+    private Paciente paciente;
     private String nome;
     private String nascimento;
-    private int sexo;
-    private int estcivil;    
+    private ConstantesItem sexo;
+    private ConstantesItem estcivil;    
     private String telefonefixo;
     private String telefonecelular;
     private String email;
-    
-    private String nmparentesco;
 
     public int getCodigo() {
         return codigo;
@@ -22,11 +20,11 @@ public class PacienteResponsavel extends Endereco {
         this.codigo = codigo;
     }
 
-    public int getPaciente() {
+    public Paciente getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(int paciente) {
+    public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
 
@@ -46,19 +44,19 @@ public class PacienteResponsavel extends Endereco {
         this.nascimento = nascimento;
     }
 
-    public int getSexo() {
+    public ConstantesItem getSexo() {
         return sexo;
     }
 
-    public void setSexo(int sexo) {
+    public void setSexo(ConstantesItem sexo) {
         this.sexo = sexo;
     }
 
-    public int getEstcivil() {
+    public ConstantesItem getEstcivil() {
         return estcivil;
     }
 
-    public void setEstcivil(int estcivil) {
+    public void setEstcivil(ConstantesItem estcivil) {
         this.estcivil = estcivil;
     }
 
@@ -85,15 +83,6 @@ public class PacienteResponsavel extends Endereco {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getNmparentesco() {
-        return nmparentesco;
-    }
-
-    public void setNmparentesco(String nmparentesco) {
-        this.nmparentesco = nmparentesco;
-    }
-    
-    
+        
     
 }

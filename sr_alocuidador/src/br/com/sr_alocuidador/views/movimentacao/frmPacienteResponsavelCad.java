@@ -5,6 +5,8 @@
  */
 package br.com.sr_alocuidador.views.movimentacao;
 
+import br.com.sr_alocuidador.daos.ConstantesItemDAO;
+import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteResponsavelDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
 import br.com.sr_alocuidador.models.PacienteResponsavel;
@@ -17,6 +19,9 @@ import javax.swing.JOptionPane;
  */
 public class frmPacienteResponsavelCad extends javax.swing.JDialog {
 
+    private PacienteResponsavelDAO daoPacienteResponsavel;
+    private PacienteDAO daoPaciente;
+    private ConstantesItemDAO daoConstanteItem;
     public int xcodpaciente;
     public int xcodigo;
     
@@ -179,6 +184,9 @@ public class frmPacienteResponsavelCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoPacienteResponsavel = new PacienteResponsavelDAO();
+            daoPaciente = new PacienteDAO();
+            daoConstanteItem = new ConstantesItemDAO();
             pesquisar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro encontrado: " + ex.toString());
@@ -272,12 +280,12 @@ public class frmPacienteResponsavelCad extends javax.swing.JDialog {
 
     private void pesquisar() throws SQLException {
         
-        PacienteResponsavel c = PacienteResponsavelDAO.buscarPorId(xcodigo);
+        PacienteResponsavel c = daoPacienteResponsavel.buscarPorId(xcodigo);
         if (c != null){
             txtNome.setText(c.getNome());
             txtNascimento.setText(Uteis.formatarData(c.getNascimento()));
-            cmbSexo.setSelectedIndex(c.getSexo());
-            cmbEstadoCivil.setSelectedIndex(c.getEstcivil());
+            cmbSexo.setSelectedIndex(c.getSexo().getIndice());
+            cmbEstadoCivil.setSelectedIndex(c.getEstcivil().getIndice());
             txtEndereco.setText(c.getEndereco());
             txtBairro.setText(c.getBairro());
             txtCidade.setText(c.getCidade());
@@ -350,11 +358,11 @@ public class frmPacienteResponsavelCad extends javax.swing.JDialog {
         
         PacienteResponsavel c = new PacienteResponsavel();
         c.setCodigo(xcodigo);
-        c.setPaciente(xcodpaciente);
+        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
         c.setNome(txtNome.getText());
         c.setNascimento(Uteis.desformatarData(txtNascimento.getText()));
-        c.setSexo(cmbSexo.getSelectedIndex());
-        c.setEstcivil(cmbEstadoCivil.getSelectedIndex());
+        c.setSexo(daoConstanteItem.buscarPorId(1, cmbSexo.getSelectedIndex()));
+        c.setEstcivil(daoConstanteItem.buscarPorId(2, cmbEstadoCivil.getSelectedIndex()));
         c.setEndereco(txtEndereco.getText());
         c.setBairro(txtBairro.getText());
         c.setCidade(txtCidade.getText());
@@ -363,7 +371,7 @@ public class frmPacienteResponsavelCad extends javax.swing.JDialog {
         c.setTelefonefixo(txtFoneFixo.getText());
         c.setTelefonecelular(txtFoneCelular.getText());
         c.setEmail(txtEmail.getText());
-        PacienteResponsavelDAO.validaDados(c);        
+        daoPacienteResponsavel.validaDados(c);        
         
     }
 }

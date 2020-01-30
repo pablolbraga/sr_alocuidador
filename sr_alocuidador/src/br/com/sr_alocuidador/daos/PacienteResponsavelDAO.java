@@ -10,17 +10,25 @@ import java.util.List;
 
 public class PacienteResponsavelDAO {
     
-    private static void incluir(PacienteResponsavel c) throws SQLException{
+    private final PacienteDAO daoPaciente;
+    private final ConstantesItemDAO daoConstanteItem;
+    
+    public PacienteResponsavelDAO(){
+        daoPaciente = new PacienteDAO();
+        daoConstanteItem = new ConstantesItemDAO();
+    }
+    
+    private void incluir(PacienteResponsavel c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO CLIENTES_RESPONSAVEL (IDCLIENTE, NOME, DTNASC, CSTSEXO, CSTESTCIVIL, ENDERECO, BAIRRO, CIDADE, UF, CEP");
         sql.append(", CONTATOS, EMAIL, CELULAR) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sql.toString());
-        pst.setInt(1, c.getPaciente());
+        pst.setInt(1, c.getPaciente().getCodigo());
         pst.setString(2, c.getNome());
         pst.setString(3, c.getNascimento());
-        pst.setInt(4, c.getSexo());
-        pst.setInt(5, c.getEstcivil());
+        pst.setInt(4, c.getSexo().getIndice());
+        pst.setInt(5, c.getEstcivil().getIndice());
         pst.setString(6, c.getEndereco());
         pst.setString(7, c.getBairro());
         pst.setString(8, c.getCidade());
@@ -30,20 +38,21 @@ public class PacienteResponsavelDAO {
         pst.setString(12, c.getEmail());
         pst.setString(13, c.getTelefonecelular());
         pst.execute();
+        pst.close();
         
     }
     
-    private static void alterar(PacienteResponsavel c) throws SQLException{
+    private void alterar(PacienteResponsavel c) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE CLIENTES_RESPONSAVEL SET IDCLIENTE = ?, NOME = ?, DTNASC = ?, CSTSEXO = ?, CSTESTCIVIL = ?, ENDERECO = ?, BAIRRO = ?, CIDADE = ?, UF = ?, CEP = ?");
         sql.append(", CONTATOS = ?, EMAIL = ?, CELULAR = ? WHERE IDCLIRESPONSAVEL = ?");
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sql.toString());
-        pst.setInt(1, c.getPaciente());
+        pst.setInt(1, c.getPaciente().getCodigo());
         pst.setString(2, c.getNome());
         pst.setString(3, c.getNascimento());
-        pst.setInt(4, c.getSexo());
-        pst.setInt(5, c.getEstcivil());
+        pst.setInt(4, c.getSexo().getIndice());
+        pst.setInt(5, c.getEstcivil().getIndice());
         pst.setString(6, c.getEndereco());
         pst.setString(7, c.getBairro());
         pst.setString(8, c.getCidade());
@@ -54,19 +63,20 @@ public class PacienteResponsavelDAO {
         pst.setString(13, c.getTelefonecelular());
         pst.setInt(14, c.getCodigo());
         pst.execute();
-        
+        pst.close();
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM CLIENTES_RESPONSAVEL WHERE IDCLIRESPONSAVEL = ?");
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sql.toString());
         pst.setInt(1, codigo);
         pst.execute();
+        pst.close();
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM CLIENTES_RESPONSAVEL WHERE IDCLIRESPONSAVEL = ?");
@@ -77,14 +87,14 @@ public class PacienteResponsavelDAO {
         
     }
     
-    public static void validaDados(PacienteResponsavel c) throws SQLException{
+    public void validaDados(PacienteResponsavel c) throws SQLException{
         if (existeRegistro(c.getCodigo()))
             alterar(c);
         else
             incluir(c);
     }
     
-    public static PacienteResponsavel buscarPorId(int codigo) throws SQLException{
+    public PacienteResponsavel buscarPorId(int codigo) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT CC.* FROM CLIENTES_RESPONSAVEL CC WHERE CC.IDCLIRESPONSAVEL = ?");
@@ -95,11 +105,11 @@ public class PacienteResponsavelDAO {
         while(rs.next()){
             pce = new PacienteResponsavel();
             pce.setCodigo(rs.getInt("IDCLIRESPONSAVEL"));
-            pce.setPaciente(rs.getInt("IDCLIENTE"));
+            pce.setPaciente(daoPaciente.buscarPorId( rs.getInt("IDCLIENTE") ));
             pce.setNome(rs.getString("NOME"));
             pce.setNascimento(rs.getString("DTNASC") == null ? "" : rs.getString("DTNASC"));
-            pce.setSexo(rs.getInt("CSTSEXO"));
-            pce.setEstcivil(rs.getInt("CSTESTCIVIL"));
+            pce.setSexo(daoConstanteItem.buscarPorId(1, rs.getInt("CSTSEXO")));
+            pce.setEstcivil(daoConstanteItem.buscarPorId(2, rs.getInt("CSTESTCIVIL")));
             pce.setEndereco(rs.getString("ENDERECO"));
             pce.setBairro(rs.getString("BAIRRO"));
             pce.setCidade(rs.getString("CIDADE"));
@@ -113,7 +123,7 @@ public class PacienteResponsavelDAO {
         
     }
     
-    public static List<PacienteResponsavel> listarCuidadores(int paciente){
+    public List<PacienteResponsavel> listarCuidadores(int paciente){
         
         StringBuilder sql = new StringBuilder();
         List<PacienteResponsavel> lista = new ArrayList<>();
@@ -127,7 +137,7 @@ public class PacienteResponsavelDAO {
                 PacienteResponsavel pce = new PacienteResponsavel();
                 pce.setCodigo(rs.getInt("IDCLIRESPONSAVEL"));
                 pce.setNome(rs.getString("NOME"));
-                pce.setPaciente(rs.getInt("IDCLIENTE"));  
+                pce.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));  
                 lista.add(pce);
             }            
         } catch (SQLException ex) {

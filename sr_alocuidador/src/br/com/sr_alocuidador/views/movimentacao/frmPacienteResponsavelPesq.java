@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmPacienteResponsavelPesq extends javax.swing.JDialog {
     
     public int xcodpaciente;
+    private PacienteResponsavelDAO daoPacienteResponsavel;
     
     /**
      * Creates new form frmPacienteResponsavelPesq
@@ -152,6 +153,7 @@ public class frmPacienteResponsavelPesq extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoPacienteResponsavel = new PacienteResponsavelDAO();
         pesquisar();
     }//GEN-LAST:event_formWindowOpened
 
@@ -242,7 +244,7 @@ public class frmPacienteResponsavelPesq extends javax.swing.JDialog {
     private void pesquisar() {
         DefaultTableModel modelo = (DefaultTableModel)tblResultado.getModel(); 
         modelo.setNumRows(0);        
-        for(PacienteResponsavel c : PacienteResponsavelDAO.listarCuidadores(xcodpaciente)){
+        for(PacienteResponsavel c : daoPacienteResponsavel.listarCuidadores(xcodpaciente)){
             modelo.addRow(new Object[]{
                 c.getCodigo(),
                 c.getNome()
@@ -270,7 +272,7 @@ public class frmPacienteResponsavelPesq extends javax.swing.JDialog {
     
     private void excluir() throws SQLException{
         
-        PacienteResponsavelDAO.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
+        daoPacienteResponsavel.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
         
     }
 }
