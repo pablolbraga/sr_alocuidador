@@ -6,8 +6,10 @@
 package br.com.sr_alocuidador.views.movimentacao;
 
 
+import br.com.sr_alocuidador.daos.ConstantesItemDAO;
 import br.com.sr_alocuidador.daos.PacienteCuidadorDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteCuidador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -18,9 +20,10 @@ import javax.swing.JOptionPane;
  */
 public class frmPacienteCuidadorCad extends javax.swing.JDialog {
 
-    public int xcodpaciente;
+    public Paciente xpaciente;
     public int xcodigo;
     private PacienteCuidadorDAO daoPacienteCuidador;
+    private ConstantesItemDAO daoConstanteItem;
     
     /**
      * Creates new form frmPacienteCuidadorCad
@@ -197,6 +200,7 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            daoConstanteItem = new ConstantesItemDAO();
             daoPacienteCuidador = new PacienteCuidadorDAO();
             pesquisar();
         } catch (SQLException ex) {
@@ -298,9 +302,9 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
         if (c != null){
             txtNome.setText(c.getNome());
             txtNascimento.setText(Uteis.formatarData(c.getNascimento()));
-            cmbSexo.setSelectedIndex(c.getSexo());
-            cmbEstadoCivil.setSelectedIndex(c.getEstcivil());
-            cmbParentesco.setSelectedIndex(c.getParentesco());
+            cmbSexo.setSelectedIndex(c.getSexo().getIndice());
+            cmbEstadoCivil.setSelectedIndex(c.getEstcivil().getIndice());
+            cmbParentesco.setSelectedIndex(c.getParentesco().getIndice());
             txtEndereco.setText(c.getEndereco());
             txtBairro.setText(c.getBairro());
             txtCidade.setText(c.getCidade());
@@ -309,7 +313,7 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
             txtFoneFixo.setText(c.getTelefonefixo());
             txtFoneCelular.setText(c.getTelefonecelular());
             txtEmail.setText(c.getEmail());
-            cmbSituacao.setSelectedIndex(c.getSituacao());
+            cmbSituacao.setSelectedIndex(c.getSituacao().getIndice());
         }
         
     }
@@ -384,12 +388,12 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
         
         PacienteCuidador c = new PacienteCuidador();
         c.setCodigo(xcodigo);
-        c.setPaciente(xcodpaciente);
+        c.setPaciente(xpaciente);
         c.setNome(txtNome.getText());
         c.setNascimento(Uteis.desformatarData(txtNascimento.getText()));
-        c.setSexo(cmbSexo.getSelectedIndex());
-        c.setEstcivil(cmbEstadoCivil.getSelectedIndex());
-        c.setParentesco(cmbParentesco.getSelectedIndex());
+        c.setSexo(daoConstanteItem.buscarPorId(1, cmbSexo.getSelectedIndex()));
+        c.setEstcivil(daoConstanteItem.buscarPorId(2, cmbEstadoCivil.getSelectedIndex()));
+        c.setParentesco(daoConstanteItem.buscarPorId(28, cmbParentesco.getSelectedIndex()));
         c.setEndereco(txtEndereco.getText());
         c.setBairro(txtBairro.getText());
         c.setCidade(txtCidade.getText());
@@ -398,7 +402,7 @@ public class frmPacienteCuidadorCad extends javax.swing.JDialog {
         c.setTelefonefixo(txtFoneFixo.getText());
         c.setTelefonecelular(txtFoneCelular.getText());
         c.setEmail(txtEmail.getText());
-        c.setSituacao(cmbSituacao.getSelectedIndex());
+        c.setSituacao(daoConstanteItem.buscarPorId(29, cmbSituacao.getSelectedIndex()));
         daoPacienteCuidador.validaDados(c);        
         
     }

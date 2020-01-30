@@ -3,28 +3,17 @@ package br.com.sr_alocuidador.models;
 public class PacienteCuidador extends Endereco {
     
     private int codigo;
-    private int paciente;
+    private Paciente paciente;
     private String nome;
     private String nascimento;
-    private int sexo;
-    private int estcivil;    
-    private int parentesco;
-    private int situacao;
+    private ConstantesItem sexo;
+    private ConstantesItem estcivil;    
+    private ConstantesItem parentesco;
+    private ConstantesItem situacao;
     private String telefonefixo;
     private String telefonecelular;
     private String email;
-    private String nmparentesco;
 
-    public String getNmparentesco() {
-        return nmparentesco;
-    }
-
-    public void setNmparentesco(String nmparentesco) {
-        this.nmparentesco = nmparentesco;
-    }
-
-    
-    
     public int getCodigo() {
         return codigo;
     }
@@ -33,11 +22,11 @@ public class PacienteCuidador extends Endereco {
         this.codigo = codigo;
     }
 
-    public int getPaciente() {
+    public Paciente getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(int paciente) {
+    public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
 
@@ -57,35 +46,35 @@ public class PacienteCuidador extends Endereco {
         this.nascimento = nascimento;
     }
 
-    public int getSexo() {
+    public ConstantesItem getSexo() {
         return sexo;
     }
 
-    public void setSexo(int sexo) {
+    public void setSexo(ConstantesItem sexo) {
         this.sexo = sexo;
     }
 
-    public int getEstcivil() {
+    public ConstantesItem getEstcivil() {
         return estcivil;
     }
 
-    public void setEstcivil(int estcivil) {
+    public void setEstcivil(ConstantesItem estcivil) {
         this.estcivil = estcivil;
     }
 
-    public int getParentesco() {
+    public ConstantesItem getParentesco() {
         return parentesco;
     }
 
-    public void setParentesco(int parentesco) {
+    public void setParentesco(ConstantesItem parentesco) {
         this.parentesco = parentesco;
     }
 
-    public int getSituacao() {
+    public ConstantesItem getSituacao() {
         return situacao;
     }
 
-    public void setSituacao(int situacao) {
+    public void setSituacao(ConstantesItem situacao) {
         this.situacao = situacao;
     }
 
@@ -112,7 +101,6 @@ public class PacienteCuidador extends Endereco {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-    
+
+        
 }
