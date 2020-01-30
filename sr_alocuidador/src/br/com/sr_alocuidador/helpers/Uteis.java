@@ -97,5 +97,29 @@ public class Uteis {
         
     }
     
+    public static String zerosAEsquerda(String value, int n){
+        
+        String s = value.trim();
+        StringBuffer resp = new StringBuffer();
+        int fim = n - s.length();
+        for (int x = 0; x < fim; x++){
+            resp.append("0");
+        }
+        return resp + s;
+        
+    }
+    
+    public static String formatarDataHora(String datahora){
+        if (!"".equals(datahora)){        
+            String[] xdatahora = datahora.split(" ");
+            //Formata data
+            String[] xdata = xdatahora[0].split("-");
+            String novadata = xdata[2] + "/" + xdata[1] + "/" + xdata[0];
+            return novadata + " " + xdatahora[1]; 
+        }
+        else return "";
+        
+    }
+    
     
 }
