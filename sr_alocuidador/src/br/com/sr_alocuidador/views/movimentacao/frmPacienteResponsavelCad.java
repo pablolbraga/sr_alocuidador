@@ -9,6 +9,7 @@ import br.com.sr_alocuidador.daos.ConstantesItemDAO;
 import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteResponsavelDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteResponsavel;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -20,9 +21,8 @@ import javax.swing.JOptionPane;
 public class frmPacienteResponsavelCad extends javax.swing.JDialog {
 
     private PacienteResponsavelDAO daoPacienteResponsavel;
-    private PacienteDAO daoPaciente;
     private ConstantesItemDAO daoConstanteItem;
-    public int xcodpaciente;
+    public Paciente xpaciente;
     public int xcodigo;
     
     /**
@@ -185,7 +185,6 @@ public class frmPacienteResponsavelCad extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             daoPacienteResponsavel = new PacienteResponsavelDAO();
-            daoPaciente = new PacienteDAO();
             daoConstanteItem = new ConstantesItemDAO();
             pesquisar();
         } catch (SQLException ex) {
@@ -358,7 +357,7 @@ public class frmPacienteResponsavelCad extends javax.swing.JDialog {
         
         PacienteResponsavel c = new PacienteResponsavel();
         c.setCodigo(xcodigo);
-        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
+        c.setPaciente(xpaciente);
         c.setNome(txtNome.getText());
         c.setNascimento(Uteis.desformatarData(txtNascimento.getText()));
         c.setSexo(daoConstanteItem.buscarPorId(1, cmbSexo.getSelectedIndex()));
