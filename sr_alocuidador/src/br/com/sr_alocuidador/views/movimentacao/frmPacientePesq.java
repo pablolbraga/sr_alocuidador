@@ -531,9 +531,13 @@ public class frmPacientePesq extends javax.swing.JDialog {
     private void mnPopupServicoMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnPopupServicoMedicoActionPerformed
         if (Uteis.linhaSelecionada(tblResultado)){
             
-            frmPacienteServicoMedicoPesq f = new frmPacienteServicoMedicoPesq(null, rootPaneCheckingEnabled);
-            f.xcodpaciente = Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString());
-            f.setVisible(true);
+            try{
+                frmPacienteServicoMedicoPesq f = new frmPacienteServicoMedicoPesq(null, rootPaneCheckingEnabled);
+                f.xpaciente = daoPaciente.buscarPorId( Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()) );
+                f.setVisible(true);
+            } catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+            }
             
         }
     }//GEN-LAST:event_mnPopupServicoMedicoActionPerformed

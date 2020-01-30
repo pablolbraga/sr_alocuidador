@@ -9,6 +9,7 @@ import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteServicoMedicoDAO;
 import br.com.sr_alocuidador.daos.ServicoMedicoDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteServicoMedico;
 import br.com.sr_alocuidador.models.ServicoMedico;
 import java.sql.SQLException;
@@ -23,12 +24,11 @@ import javax.swing.JOptionPane;
 public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
 
     private List<ServicoMedico> listaServicoMedico = new ArrayList<>();
-    private PacienteDAO daoPaciente;
     private PacienteServicoMedicoDAO daoPacienteServicoMedico;
     private ServicoMedicoDAO daoServicoMedico;
     
     public int xcodigo;
-    public int xcodpaciente;    
+    public Paciente xpaciente;    
     
     public frmPacienteServicoMedicoCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -101,7 +101,6 @@ public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            daoPaciente = new PacienteDAO();
             daoPacienteServicoMedico = new PacienteServicoMedicoDAO();
             daoServicoMedico = new ServicoMedicoDAO();
             preencheServicoMedico();
@@ -207,7 +206,7 @@ public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteServicoMedico c = new PacienteServicoMedico();
         c.setCodigo(xcodigo);
-        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
+        c.setPaciente(xpaciente);
         c.setServico(((ServicoMedico)cmbServicoMedico.getSelectedItem()));        
         c.setData(Uteis.desformatarData(txtData.getText()));
         c.setProfissional(txtProfissional.getText());
