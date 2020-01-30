@@ -7,6 +7,7 @@ package br.com.sr_alocuidador.views.movimentacao;
 
 import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteProfissionalDAO;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteProfissional;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -18,8 +19,7 @@ import javax.swing.JOptionPane;
 public class frmPacienteProfissionalCad extends javax.swing.JDialog {
 
     public int xcodigo;
-    public int xcodpaciente;
-    private PacienteDAO daoPaciente;
+    public Paciente xpaciente;
     private PacienteProfissionalDAO daoPacienteProfissional;
     
     public frmPacienteProfissionalCad(java.awt.Frame parent, boolean modal) {
@@ -129,16 +129,15 @@ public class frmPacienteProfissionalCad extends javax.swing.JDialog {
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGravar)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(352, 408));
+        setSize(new java.awt.Dimension(352, 453));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            daoPaciente = new PacienteDAO();
             daoPacienteProfissional = new PacienteProfissionalDAO();
             Pesquisar();
         } catch (SQLException ex) {
@@ -257,7 +256,7 @@ public class frmPacienteProfissionalCad extends javax.swing.JDialog {
     private void gravar() throws SQLException {
         PacienteProfissional p = new PacienteProfissional();
         p.setCodigo(xcodigo);
-        p.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
+        p.setPaciente(xpaciente);
         p.setDescricao(txtNome.getText());
         p.setEspecialidade(txtEspecialidade.getText());
         p.setContato(txtTelefoneFixo.getText());

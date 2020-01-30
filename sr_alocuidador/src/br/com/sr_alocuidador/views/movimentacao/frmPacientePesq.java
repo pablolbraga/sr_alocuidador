@@ -427,9 +427,13 @@ public class frmPacientePesq extends javax.swing.JDialog {
     private void mnPopupProfissionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnPopupProfissionaisActionPerformed
         if (Uteis.linhaSelecionada(tblResultado)){
             
-            frmPacienteProfissionalPesq f = new frmPacienteProfissionalPesq(null, rootPaneCheckingEnabled);
-            f.xcodpaciente = Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString());
-            f.setVisible(true);
+            try{
+                frmPacienteProfissionalPesq f = new frmPacienteProfissionalPesq(null, rootPaneCheckingEnabled);
+                f.xpaciente = daoPaciente.buscarPorId( Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()) );
+                f.setVisible(true);
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+            }
             
         }
     }//GEN-LAST:event_mnPopupProfissionaisActionPerformed
