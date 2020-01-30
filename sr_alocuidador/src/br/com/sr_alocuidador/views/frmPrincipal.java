@@ -5,6 +5,7 @@
  */
 package br.com.sr_alocuidador.views;
 
+import br.com.sr_alocuidador.views.administracao.frmUsuarioPesq;
 import br.com.sr_alocuidador.views.cadastros.frmCategoriaDoencaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmCategoriaPerguntaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmDoencaPesq;
@@ -45,6 +46,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         mnServicoMedico = new javax.swing.JMenuItem();
         mnVacina = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        mnUsuario = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Alô Cuidador");
@@ -113,6 +116,18 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenu2.setText("Movimentação");
         jMenuBar1.add(jMenu2);
 
+        jMenu5.setText("Administração");
+
+        mnUsuario.setText("Usuários");
+        mnUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnUsuarioActionPerformed(evt);
+            }
+        });
+        jMenu5.add(mnUsuario);
+
+        jMenuBar1.add(jMenu5);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,6 +174,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         f.setVisible(true);
     }//GEN-LAST:event_mnVacinaActionPerformed
 
+    private void mnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnUsuarioActionPerformed
+        frmUsuarioPesq f = new frmUsuarioPesq(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -199,12 +219,14 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mnCategoriaDoenca;
     private javax.swing.JMenuItem mnCategoriaPergunta;
     private javax.swing.JMenuItem mnDoenca;
     private javax.swing.JMenuItem mnPaciente;
     private javax.swing.JMenuItem mnServicoMedico;
+    private javax.swing.JMenuItem mnUsuario;
     private javax.swing.JMenuItem mnVacina;
     // End of variables declaration//GEN-END:variables
 }
