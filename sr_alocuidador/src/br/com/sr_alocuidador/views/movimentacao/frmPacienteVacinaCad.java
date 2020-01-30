@@ -9,6 +9,7 @@ import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteVacinaDAO;
 import br.com.sr_alocuidador.daos.VacinaDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteVacina;
 import br.com.sr_alocuidador.models.Vacina;
 import java.sql.SQLException;
@@ -23,11 +24,10 @@ import javax.swing.JOptionPane;
 public class frmPacienteVacinaCad extends javax.swing.JDialog {
 
     private List<Vacina> listaVacina = new ArrayList<>();
-    private PacienteDAO daoPaciente;
     private PacienteVacinaDAO daoPacienteVacina;
     
     public int xcodigo;
-    public int xcodpaciente;    
+    public Paciente xpaciente;    
     
     public frmPacienteVacinaCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -100,7 +100,6 @@ public class frmPacienteVacinaCad extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            daoPaciente = new PacienteDAO();
             daoPacienteVacina = new PacienteVacinaDAO();
             preencheVacina();
             pesquisar();
@@ -201,7 +200,7 @@ public class frmPacienteVacinaCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteVacina c = new PacienteVacina();
         c.setCodigo(xcodigo);
-        c.setPaciente(daoPaciente.buscarPorId( xcodpaciente ));
+        c.setPaciente( xpaciente );
         c.setVacina(((Vacina)cmbVacina.getSelectedItem()));        
         c.setData(Uteis.desformatarData(txtData.getText()));
         c.setLocal(txtLocal.getText());
