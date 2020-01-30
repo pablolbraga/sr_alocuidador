@@ -9,6 +9,7 @@ import br.com.sr_alocuidador.daos.DoencaDAO;
 import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.daos.PacienteDoencaDAO;
 import br.com.sr_alocuidador.models.Doenca;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteDoenca;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,10 +25,9 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
     private List<Doenca> listaDoenca = new ArrayList<>();
     
     public int xcodigo;
-    public int xcodpaciente; 
+    public Paciente xpaciente; 
     private PacienteDoencaDAO daoPacienteDoenca;
     private DoencaDAO daoDoenca;
-    private PacienteDAO daoPaciente;
     
     public frmPacienteDoencaCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -89,7 +89,6 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
         try {
             daoPacienteDoenca = new PacienteDoencaDAO();
             daoDoenca = new DoencaDAO();
-            daoPaciente = new PacienteDAO();
             preencheDoenca();
             pesquisar();
         } catch (SQLException ex) {
@@ -180,7 +179,7 @@ public class frmPacienteDoencaCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteDoenca c = new PacienteDoenca();
         c.setCodigo(xcodigo);
-        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
+        c.setPaciente(xpaciente);
         c.setDoenca(((Doenca)cmbDoenca.getSelectedItem()));
         c.setDescricao(txtDescricao.getText());
         daoPacienteDoenca.validaDados(c);        
