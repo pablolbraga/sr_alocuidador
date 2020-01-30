@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmServicoMedicoPesq extends javax.swing.JDialog {
 
     private DefaultTableModel modelo = null;
+    private ServicoMedicoDAO daoServicoMedico;
     
     /**
      * Creates new form frmServicoMedicoPesq
@@ -161,6 +162,7 @@ public class frmServicoMedicoPesq extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoServicoMedico = new ServicoMedicoDAO();
         modelo = (DefaultTableModel)tblResultado.getModel(); 
     }//GEN-LAST:event_formWindowOpened
 
@@ -237,7 +239,7 @@ public class frmServicoMedicoPesq extends javax.swing.JDialog {
     
     private void pesquisar(){
         try {
-            List<ServicoMedico> lista = ServicoMedicoDAO.listarServicoMedico(txtPesquisa.getText());
+            List<ServicoMedico> lista = daoServicoMedico.listarServicoMedico(txtPesquisa.getText());
             if (lista.size() > 0){
                 modelo.setNumRows(0);
                 for(int i = 0; i < lista.size(); i++){
@@ -261,7 +263,7 @@ public class frmServicoMedicoPesq extends javax.swing.JDialog {
     private void excluir() {
         if (Uteis.linhaSelecionada(tblResultado)){
             try {
-                ServicoMedicoDAO.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
+                daoServicoMedico.excluir(Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString()));
                 pesquisar();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro de sql: " + ex.toString());

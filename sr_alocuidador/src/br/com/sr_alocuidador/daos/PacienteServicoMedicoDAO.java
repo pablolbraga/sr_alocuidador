@@ -10,10 +10,12 @@ import java.util.List;
 
 public class PacienteServicoMedicoDAO {
     
-    private PacienteDAO daoPaciente;
+    private final PacienteDAO daoPaciente;
+    private final ServicoMedicoDAO daoServicoMedico;
     
     public PacienteServicoMedicoDAO(){
         daoPaciente = new PacienteDAO();
+        daoServicoMedico = new ServicoMedicoDAO();
     }
     
     private void incluir(PacienteServicoMedico c) throws SQLException{
@@ -28,6 +30,7 @@ public class PacienteServicoMedicoDAO {
         pst.setString(4, c.getProfissional());
         pst.setString(5, c.getObservacao());
         pst.execute();
+        pst.close();
         
     }
     
@@ -43,7 +46,7 @@ public class PacienteServicoMedicoDAO {
         pst.setString(5, c.getObservacao());
         pst.setInt(6, c.getCodigo());
         pst.execute();
-        
+        pst.close();
     }
     
     public void excluir(int codigo) throws SQLException{
@@ -53,6 +56,7 @@ public class PacienteServicoMedicoDAO {
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sql.toString());
         pst.setInt(1, codigo);
         pst.execute();
+        pst.close();
         
     }
     
@@ -89,7 +93,7 @@ public class PacienteServicoMedicoDAO {
             c = new PacienteServicoMedico();
             c.setCodigo(rs.getInt("ID"));
             c.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
-            c.setServico(ServicoMedicoDAO.buscarPorId(rs.getInt("IDSERVICO")));
+            c.setServico(daoServicoMedico.buscarPorId(rs.getInt("IDSERVICO")));
             c.setData(rs.getString("DATA"));
             c.setProfissional(rs.getString("PROFISSIONAL"));
             c.setObservacao(rs.getString("OBSERVACAO"));
@@ -112,7 +116,7 @@ public class PacienteServicoMedicoDAO {
             PacienteServicoMedico c = new PacienteServicoMedico();
             c.setCodigo(rs.getInt("ID"));
             c.setPaciente(daoPaciente.buscarPorId(rs.getInt("IDCLIENTE")));
-            c.setServico(ServicoMedicoDAO.buscarPorId(rs.getInt("IDSERVICO")));
+            c.setServico(daoServicoMedico.buscarPorId(rs.getInt("IDSERVICO")));
             c.setData(rs.getString("DATA"));
             c.setProfissional(rs.getString("PROFISSIONAL"));
             c.setObservacao(rs.getString("OBSERVACAO"));

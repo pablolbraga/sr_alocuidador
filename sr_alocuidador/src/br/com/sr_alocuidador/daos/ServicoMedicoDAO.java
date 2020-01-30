@@ -2,7 +2,6 @@ package br.com.sr_alocuidador.daos;
 
 import br.com.sr_alocuidador.conexao.Conexao;
 import br.com.sr_alocuidador.models.ServicoMedico;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class ServicoMedicoDAO {
         
-    private static void incluir(ServicoMedico c) throws SQLException{
+    private void incluir(ServicoMedico c) throws SQLException{
         
         String sqlInserir = "INSERT INTO SERVICOS (NOME) VALUES (?)";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlInserir);
@@ -20,7 +19,7 @@ public class ServicoMedicoDAO {
         
     }
     
-    private static void alterar(ServicoMedico c) throws SQLException{
+    private void alterar(ServicoMedico c) throws SQLException{
         
         String sqlAlterar = "UPDATE SERVICOS SET NOME = ? WHERE ID = ?";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlAlterar);
@@ -30,7 +29,7 @@ public class ServicoMedicoDAO {
         
     }
     
-    public static void excluir(int codigo) throws SQLException{
+    public void excluir(int codigo) throws SQLException{
         
         String sqlExcluir = "DELETE FROM SERVICOS WHERE ID = ?";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlExcluir);
@@ -39,7 +38,7 @@ public class ServicoMedicoDAO {
         
     }
     
-    private static boolean existeRegistro(int codigo) throws SQLException{
+    private boolean existeRegistro(int codigo) throws SQLException{
         
         String sqlBuscarPorId = "SELECT * FROM SERVICOS WHERE ID = ?";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlBuscarPorId);
@@ -49,7 +48,7 @@ public class ServicoMedicoDAO {
         
     }
     
-    public static void validaDados(ServicoMedico c) throws SQLException{
+    public void validaDados(ServicoMedico c) throws SQLException{
         if (existeRegistro(c.getCodigo())){
             alterar(c);
         } else {
@@ -57,7 +56,7 @@ public class ServicoMedicoDAO {
         }
     }
     
-    public static ServicoMedico buscarPorId(int codigo) throws SQLException{
+    public ServicoMedico buscarPorId(int codigo) throws SQLException{
         
         String sqlBuscarPorId = "SELECT * FROM SERVICOS WHERE ID = ?";
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlBuscarPorId);
@@ -73,7 +72,7 @@ public class ServicoMedicoDAO {
         
     }
     
-    public static List<ServicoMedico> listarServicoMedico(String filtro) throws SQLException{
+    public List<ServicoMedico> listarServicoMedico(String filtro) throws SQLException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM SERVICOS WHERE 1 = 1 ");

@@ -25,6 +25,7 @@ public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
     private List<ServicoMedico> listaServicoMedico = new ArrayList<>();
     private PacienteDAO daoPaciente;
     private PacienteServicoMedicoDAO daoPacienteServicoMedico;
+    private ServicoMedicoDAO daoServicoMedico;
     
     public int xcodigo;
     public int xcodpaciente;    
@@ -102,6 +103,7 @@ public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
         try {
             daoPaciente = new PacienteDAO();
             daoPacienteServicoMedico = new PacienteServicoMedicoDAO();
+            daoServicoMedico = new ServicoMedicoDAO();
             preencheServicoMedico();
             pesquisar();
         } catch (SQLException ex) {
@@ -230,7 +232,7 @@ public class frmPacienteServicoMedicoCad extends javax.swing.JDialog {
 
     private void preencheServicoMedico() throws SQLException {
         cmbServicoMedico.removeAllItems();
-        listaServicoMedico = ServicoMedicoDAO.listarServicoMedico("");
+        listaServicoMedico = daoServicoMedico.listarServicoMedico("");
         for(ServicoMedico c : listaServicoMedico){
             cmbServicoMedico.addItem(c);
         }
