@@ -12,6 +12,7 @@ import br.com.sr_alocuidador.daos.PacienteDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
 import br.com.sr_alocuidador.models.ConstantesItem;
 import br.com.sr_alocuidador.models.Hospital;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteConsulta;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,11 +29,10 @@ public class frmPacienteConsultaCad extends javax.swing.JDialog {
     private List<ConstantesItem> listaMotivo = new ArrayList<>();
     private PacienteConsultaDAO daoPacienteConsulta;
     private ConstantesItemDAO daoConstanteItem;
-    private PacienteDAO daoPaciente;
     private HospitalDAO daoHospital;
     
     public int xcodigo;
-    public int xcodpaciente;    
+    public Paciente xpaciente;    
     
     public frmPacienteConsultaCad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -112,7 +112,6 @@ public class frmPacienteConsultaCad extends javax.swing.JDialog {
         try {
             daoPacienteConsulta = new PacienteConsultaDAO();
             daoConstanteItem = new ConstantesItemDAO();
-            daoPaciente = new PacienteDAO();
             daoHospital = new HospitalDAO();
             preencheHospital();
             preencheMotivo();
@@ -212,7 +211,7 @@ public class frmPacienteConsultaCad extends javax.swing.JDialog {
     private void gravar() throws SQLException{
         PacienteConsulta c = new PacienteConsulta();
         c.setCodigo(xcodigo);
-        c.setPaciente(daoPaciente.buscarPorId(xcodpaciente));
+        c.setPaciente(xpaciente);
         c.setHospital(((Hospital)cmbHospital.getSelectedItem()));
         c.setData(Uteis.desformatarData(txtData.getText()));
         c.setMotivo(((ConstantesItem)cmbMotivo.getSelectedItem()));

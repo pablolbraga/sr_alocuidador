@@ -7,6 +7,7 @@ package br.com.sr_alocuidador.views.movimentacao;
 
 import br.com.sr_alocuidador.daos.PacienteConsultaDAO;
 import br.com.sr_alocuidador.helpers.Uteis;
+import br.com.sr_alocuidador.models.Paciente;
 import br.com.sr_alocuidador.models.PacienteConsulta;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmPacienteConsultaPesq extends javax.swing.JDialog {
 
-    public int xcodpaciente;
+    public Paciente xpaciente;
     private PacienteConsultaDAO daoPacienteConsulta;
         
     public frmPacienteConsultaPesq(java.awt.Frame parent, boolean modal) {
@@ -218,7 +219,7 @@ public class frmPacienteConsultaPesq extends javax.swing.JDialog {
     private void pesquisar() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel)tblResultado.getModel(); 
         modelo.setNumRows(0);        
-        for(PacienteConsulta c : daoPacienteConsulta.listarConsultasPorPaciente(xcodpaciente)){
+        for(PacienteConsulta c : daoPacienteConsulta.listarConsultasPorPaciente(xpaciente.getCodigo())){
             modelo.addRow(new Object[]{
                 c.getCodigo(),
                 c.getHospital().getNome(),
@@ -233,13 +234,13 @@ public class frmPacienteConsultaPesq extends javax.swing.JDialog {
     private void incluir(){
         frmPacienteConsultaCad f = new frmPacienteConsultaCad(null, rootPaneCheckingEnabled);
         f.xcodigo = 0;
-        f.xcodpaciente = xcodpaciente;
+        f.xpaciente = xpaciente;
         f.setVisible(true);
     }
 
     private void alterar() {
         frmPacienteConsultaCad f = new frmPacienteConsultaCad(null, rootPaneCheckingEnabled);
-        f.xcodpaciente = xcodpaciente;
+        f.xpaciente = xpaciente;
         f.xcodigo = Integer.parseInt(tblResultado.getValueAt(tblResultado.getSelectedRow(), 0).toString());
         f.setVisible(true);        
     }
