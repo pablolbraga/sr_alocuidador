@@ -2,7 +2,6 @@ package br.com.sr_alocuidador.daos;
 
 import br.com.sr_alocuidador.conexao.Conexao;
 import br.com.sr_alocuidador.models.Vacina;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +19,7 @@ public class VacinaDAO {
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlInserir);
         pst.setString(1, c.getNome());
         pst.execute();
+        pst.close();
         
     }
     
@@ -29,6 +29,7 @@ public class VacinaDAO {
         pst.setString(1, c.getNome());
         pst.setInt(2, c.getCodigo());
         pst.execute();
+        pst.close();
         
     }
     
@@ -37,6 +38,7 @@ public class VacinaDAO {
         PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sqlExcluir);
         pst.setInt(1, codigo);
         pst.execute();
+        pst.close();
         
     }
     
