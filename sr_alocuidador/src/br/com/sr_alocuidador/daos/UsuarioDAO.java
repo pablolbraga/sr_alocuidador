@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class UsuarioDAO {
     
-    public static Usuario retornarUsuarioPorLoginSenha(String login, String senha) throws SQLException, NoSuchAlgorithmException{
+    public Usuario retornarUsuarioPorLoginSenha(String login, String senha) throws SQLException, NoSuchAlgorithmException{
         
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM USUARIOS WHERE LOGIN = ? AND UPPER(SENHA2) = ? AND STATUS = 'A'");

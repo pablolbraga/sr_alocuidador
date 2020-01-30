@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 
 public class frmLogin extends javax.swing.JFrame {
 
+    private UsuarioDAO daoUsuario;
+    
     public frmLogin() {
         initComponents();
     }
@@ -31,6 +33,11 @@ public class frmLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Acesso ao Sistema");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/sr_alocuidador/images/logo_alocuidador.png"))); // NOI18N
 
@@ -94,6 +101,10 @@ public class frmLogin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnAcessoActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        daoUsuario = new UsuarioDAO();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -159,7 +170,7 @@ public class frmLogin extends javax.swing.JFrame {
 
     private void acessarSistema() throws SQLException, NoSuchAlgorithmException {
         
-        VariaveisGlobais.getInstance().setDadosUsuario(UsuarioDAO.retornarUsuarioPorLoginSenha(txtLogin.getText(), txtSenha.getText()));
+        VariaveisGlobais.getInstance().setDadosUsuario(daoUsuario.retornarUsuarioPorLoginSenha(txtLogin.getText(), txtSenha.getText()));
         if (VariaveisGlobais.getInstance().getDadosUsuario() != null){
             frmPrincipal f = new frmPrincipal();
             f.setVisible(true);
