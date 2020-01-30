@@ -10,6 +10,31 @@ import java.sql.SQLException;
 
 public class UsuarioDAO {
     
+    public Usuario buscarPorId(int codigo) throws SQLException{
+        
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM USUARIOS WHERE IDUSUARIO = ? AND STATUS = 'A'");
+        PreparedStatement pst = Conexao.AbrirConexao().prepareStatement(sql.toString());
+        pst.setInt(1, codigo);
+        ResultSet rs = pst.executeQuery();
+        Usuario usuario = null;
+        while(rs.next()){
+            usuario = new Usuario();
+            usuario.setCodigo(rs.getInt("IDUSUARIO"));
+            usuario.setNome(rs.getString("NOME"));
+            usuario.setLogin(rs.getString("LOGIN"));
+            usuario.setEmail(rs.getString("EMAIL"));
+            usuario.setSenha(rs.getString("SENHA2"));
+            usuario.setAlerta(rs.getString("ALERTA"));
+            usuario.setPesqsatisfacao(rs.getInt("PESQ_SAT_TI"));
+            usuario.setProfmedico(rs.getString("PROFMEDICO"));
+            usuario.setLace(rs.getString("LACE"));
+            usuario.setAdministrador(rs.getString("ADM"));
+        }
+        return usuario;
+        
+    }
+    
     public Usuario retornarUsuarioPorLoginSenha(String login, String senha) throws SQLException, NoSuchAlgorithmException{
         
         StringBuilder sql = new StringBuilder();
