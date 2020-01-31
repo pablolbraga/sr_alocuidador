@@ -8,6 +8,7 @@ package br.com.sr_alocuidador.views;
 import br.com.sr_alocuidador.views.administracao.frmUsuarioPesq;
 import br.com.sr_alocuidador.views.cadastros.frmCategoriaDoencaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmCategoriaPerguntaPesq;
+import br.com.sr_alocuidador.views.cadastros.frmConvenioPesq;
 import br.com.sr_alocuidador.views.cadastros.frmDoencaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmServicoMedicoPesq;
 import br.com.sr_alocuidador.views.cadastros.frmVacinaPesq;
@@ -37,15 +38,16 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        mnCategoriaPergunta = new javax.swing.JMenuItem();
-        mnPaciente = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         mnCategoriaDoenca = new javax.swing.JMenuItem();
         mnDoenca = new javax.swing.JMenuItem();
+        mnConvenio = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        mnCategoriaPergunta = new javax.swing.JMenuItem();
         mnServicoMedico = new javax.swing.JMenuItem();
         mnVacina = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        mnPaciente = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         mnUsuario = new javax.swing.JMenuItem();
 
@@ -54,26 +56,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
 
         jMenu1.setText("Cadastros");
-
-        jMenu3.setText("Perguntas");
-
-        mnCategoriaPergunta.setText("Categorias");
-        mnCategoriaPergunta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnCategoriaPerguntaActionPerformed(evt);
-            }
-        });
-        jMenu3.add(mnCategoriaPergunta);
-
-        jMenu1.add(jMenu3);
-
-        mnPaciente.setText("Pacientes");
-        mnPaciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnPacienteActionPerformed(evt);
-            }
-        });
-        jMenu1.add(mnPaciente);
 
         jMenu4.setText("Doenças");
 
@@ -95,6 +77,26 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenu1.add(jMenu4);
 
+        mnConvenio.setText("Convênios");
+        mnConvenio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConvenioActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnConvenio);
+
+        jMenu3.setText("Perguntas");
+
+        mnCategoriaPergunta.setText("Categorias");
+        mnCategoriaPergunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCategoriaPerguntaActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnCategoriaPergunta);
+
+        jMenu1.add(jMenu3);
+
         mnServicoMedico.setText("Serviços Médicos");
         mnServicoMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +116,15 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Movimentação");
+
+        mnPaciente.setText("Pacientes");
+        mnPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnPacienteActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnPaciente);
+
         jMenuBar1.add(jMenu2);
 
         jMenu5.setText("Administração");
@@ -179,6 +190,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         f.setVisible(true);
     }//GEN-LAST:event_mnUsuarioActionPerformed
 
+    private void mnConvenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConvenioActionPerformed
+        frmConvenioPesq f = new frmConvenioPesq(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnConvenioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -223,6 +239,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mnCategoriaDoenca;
     private javax.swing.JMenuItem mnCategoriaPergunta;
+    private javax.swing.JMenuItem mnConvenio;
     private javax.swing.JMenuItem mnDoenca;
     private javax.swing.JMenuItem mnPaciente;
     private javax.swing.JMenuItem mnServicoMedico;
