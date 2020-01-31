@@ -10,6 +10,8 @@ import br.com.sr_alocuidador.views.cadastros.frmCategoriaDoencaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmCategoriaPerguntaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmConvenioPesq;
 import br.com.sr_alocuidador.views.cadastros.frmDoencaPesq;
+import br.com.sr_alocuidador.views.cadastros.frmHospitalPesq;
+import br.com.sr_alocuidador.views.cadastros.frmPerguntaPesq;
 import br.com.sr_alocuidador.views.cadastros.frmServicoMedicoPesq;
 import br.com.sr_alocuidador.views.cadastros.frmVacinaPesq;
 import br.com.sr_alocuidador.views.movimentacao.frmPacientePesq;
@@ -42,10 +44,12 @@ public class frmPrincipal extends javax.swing.JFrame {
         mnCategoriaDoenca = new javax.swing.JMenuItem();
         mnDoenca = new javax.swing.JMenuItem();
         mnConvenio = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        mnCategoriaPergunta = new javax.swing.JMenuItem();
+        mnHospital = new javax.swing.JMenuItem();
         mnServicoMedico = new javax.swing.JMenuItem();
         mnVacina = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        mnCategoriaPergunta = new javax.swing.JMenuItem();
+        mnPerguntas = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mnPaciente = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -85,17 +89,13 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(mnConvenio);
 
-        jMenu3.setText("Perguntas");
-
-        mnCategoriaPergunta.setText("Categorias");
-        mnCategoriaPergunta.addActionListener(new java.awt.event.ActionListener() {
+        mnHospital.setText("Hospitais");
+        mnHospital.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnCategoriaPerguntaActionPerformed(evt);
+                mnHospitalActionPerformed(evt);
             }
         });
-        jMenu3.add(mnCategoriaPergunta);
-
-        jMenu1.add(jMenu3);
+        jMenu1.add(mnHospital);
 
         mnServicoMedico.setText("Serviços Médicos");
         mnServicoMedico.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +112,26 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(mnVacina);
+
+        jMenu3.setText("Perguntas");
+
+        mnCategoriaPergunta.setText("Categorias");
+        mnCategoriaPergunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCategoriaPerguntaActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnCategoriaPergunta);
+
+        mnPerguntas.setText("Perguntas");
+        mnPerguntas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnPerguntasActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnPerguntas);
+
+        jMenu1.add(jMenu3);
 
         jMenuBar1.add(jMenu1);
 
@@ -195,6 +215,16 @@ public class frmPrincipal extends javax.swing.JFrame {
         f.setVisible(true);
     }//GEN-LAST:event_mnConvenioActionPerformed
 
+    private void mnHospitalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnHospitalActionPerformed
+        frmHospitalPesq f = new frmHospitalPesq(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnHospitalActionPerformed
+
+    private void mnPerguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnPerguntasActionPerformed
+        frmPerguntaPesq f = new frmPerguntaPesq(null, rootPaneCheckingEnabled);
+        f.setVisible(true);
+    }//GEN-LAST:event_mnPerguntasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -241,7 +271,9 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCategoriaPergunta;
     private javax.swing.JMenuItem mnConvenio;
     private javax.swing.JMenuItem mnDoenca;
+    private javax.swing.JMenuItem mnHospital;
     private javax.swing.JMenuItem mnPaciente;
+    private javax.swing.JMenuItem mnPerguntas;
     private javax.swing.JMenuItem mnServicoMedico;
     private javax.swing.JMenuItem mnUsuario;
     private javax.swing.JMenuItem mnVacina;
